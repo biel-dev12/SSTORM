@@ -1,4 +1,3 @@
-// App.jsx
 import { useState } from "react";
 import {
   UploadOutlined,
@@ -16,7 +15,7 @@ const App = () => {
     <LayoutEl>
       <SiderEl trigger={null} collapsible collapsed={collapsed}>
         <HeaderEl collapsed={collapsed}>
-        {!collapsed && <Logo src="./src/assets/logo.png" alt="Logo" />}
+        {!collapsed && <Logo src="./src/assets/logo-def-sstorm.svg" alt="Logo" />}
         <CollapseButton
             icon={collapsed ? <MenuIcon /> : <CloseIcon />}
             onClick={() => setCollapsed(!collapsed)} />

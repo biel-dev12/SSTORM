@@ -61,14 +61,11 @@ export const CollapseButton = styled(Button)`
 `;
 
 export const MenuIcon = styled(MdDehaze)`
-  // background-color: transparent;
-  width: 2rem!important;
-
+  font-size: 1.5rem;
 `;
 
 export const CloseIcon = styled(MdOutlineClose)`
-  // background-color: transparent;
-
+  font-size: 1.5rem;
 `;
 
 export const Logo = styled.img`
