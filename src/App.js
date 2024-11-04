@@ -1,38 +1,33 @@
-import styled from "styled-components";
-import { theme } from "./Theme";
-import { Layout, Menu, Button } from "antd";
-import { MdDehaze, MdOutlineClose } from "react-icons/md";
+import styled from 'styled-components';
+import { theme } from './Theme';
+import { Layout, Menu, Button } from 'antd';
 
 export const LayoutEl = styled(Layout)`
   width: 100vw;
   height: 100vh;
-  background-color: white;
+  background-color: ${theme.colors.background};
 `;
 
 export const ContentEl = styled(Layout.Content)`
-  margin: 5px 10px;
-  padding: 0px 0px;
-  min-height: 280;
+  padding: 10px;
+  min-height: 280px;
   background: ${theme.colors.background};
-  border-radius: 12px;
 `;
 
 export const MenuEl = styled(Menu)`
   background-color: ${theme.colors.primary};
   .ant-menu-item-icon {
-    font-size: 22px !important;
-    color: ${theme.colors.white}!important;
+    color: ${theme.colors.white} !important;
   }
 
   .ant-menu-item {
-    color: ${theme.colors.white}!important;
-    font-size: ${theme.fonts.medium};
+    color: ${theme.colors.white} !important;
     &:hover {
-      background-color: ${theme.colors.lightBlue}!important;
+      background-color: ${theme.colors.lightBlue} !important;
     }
 
     &.ant-menu-item-selected {
-      background-color: ${theme.colors.orange}!important;
+      background-color: ${theme.colors.orange} !important;
     }
   }
 `;
@@ -42,34 +37,33 @@ export const SiderEl = styled(Layout.Sider)`
 `;
 
 export const HeaderEl = styled(Layout.Header)`
-  width: 100%: 
-  transition: all 1s;
-  display: flex;
-  justify-content: ${({ collapsed }) =>
-    collapsed ? "center" : "space-between"};
-  align-items: center; 
-  padding: 0.5rem;
+  padding: 0;
   background-color: ${theme.colors.lightBlue};
-  margin: 0.5rem;
-  border-radius: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 export const CollapseButton = styled(Button)`
+  font-size: 16px;
   background-color: transparent;
   border: none;
-  outline: none!important;
+  color: ${theme.colors.text};
 `;
 
-export const MenuIcon = styled(MdDehaze)`
-  font-size: 1.5rem;
-`;
+export const UserLogo = styled.div`
+  margin: .2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  color: ${theme.colors.white}; // Mude a cor conforme necessário
+  font-size: 18px; // Ajuste o tamanho da fonte conforme necessário
+  background: ${theme.colors.white}; // Mantenha a cor de fundo ou altere conforme necessário
 
-export const CloseIcon = styled(MdOutlineClose)`
-  font-size: 1.5rem;
+  img {
+    border-radius: 50%; // Para uma logo em formato circular
+    /* margin-right: 10px; // Espaçamento entre a imagem e o texto */
+    width: 30px; // Ajuste o tamanho da imagem conforme necessário
+    height: 30px; // Ajuste o tamanho da imagem conforme necessário
+  }
 `;
-
-export const Logo = styled.img`
-  width: 100%;
-  height: auto;
-`;
-
