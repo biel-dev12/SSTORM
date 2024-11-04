@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { theme } from './Theme';
-import { Layout, Menu, Button } from 'antd';
+import styled from "styled-components";
+import { theme } from "./Theme";
+import { Layout, Menu, Button } from "antd";
 
 export const LayoutEl = styled(Layout)`
   width: 100vw;
@@ -33,6 +33,10 @@ export const MenuEl = styled(Menu)`
 `;
 
 export const SiderEl = styled(Layout.Sider)`
+  // flex: 0 0 150px!important;
+  // max-width: 150px!important;
+  // min-width: 150px!important;
+  // width: 100px!important;
   background-color: ${theme.colors.primary};
 `;
 
@@ -51,14 +55,15 @@ export const CollapseButton = styled(Button)`
 `;
 
 export const UserLogo = styled.div`
-  margin: .2rem;
+  margin: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
   color: ${theme.colors.white}; // Mude a cor conforme necessário
   font-size: 18px; // Ajuste o tamanho da fonte conforme necessário
-  background: ${theme.colors.white}; // Mantenha a cor de fundo ou altere conforme necessário
+  background: ${theme.colors
+    .white}; // Mantenha a cor de fundo ou altere conforme necessário
 
   img {
     border-radius: 50%; // Para uma logo em formato circular

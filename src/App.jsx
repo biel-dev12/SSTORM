@@ -15,7 +15,7 @@ const App = () => {
 
   return (
     <LayoutEl>
-      <SiderEl trigger={null} collapsible collapsed={collapsed}>
+      <SiderEl trigger={null} collapsible collapsed={collapsed} width={100} collapsedWidth={50}>
         <UserLogo>
           <img src="./src/assets/fav-cropped.svg" alt="Logo" /> 
         </UserLogo>
@@ -37,11 +37,6 @@ const App = () => {
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
           />
         </HeaderEl>
         <ContentEl>
