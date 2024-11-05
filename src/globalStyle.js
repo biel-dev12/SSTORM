@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    // font-family: K2D, Inter, system-ui, sans-serif;
+    font-family: K2D, Inter, system-ui, sans-serif;
     line-height: 1.5;
     font-weight: 400;
 

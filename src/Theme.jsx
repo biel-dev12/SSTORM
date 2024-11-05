@@ -8,6 +8,7 @@ export const theme = {
       text: '#2c3e50',   
       black: '#000000',   
       white: '#ffffff',   
+      gray: '#e0e0e0',   
       //Doctor's colors:
       blue: '#327EC1',    
       orange: '#F07E13',    
