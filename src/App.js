@@ -10,6 +10,7 @@ export const LayoutEl = styled(Layout)`
 `;
 
 export const ContentEl = styled(Layout.Content)`
+  filter: ${({ collapsed }) => (collapsed ? "none" : "blur(1px)")};
   padding: 0 10px;
   min-height: 280px;
   background: ${theme.colors.background};
@@ -17,15 +18,22 @@ export const ContentEl = styled(Layout.Content)`
 
 export const MenuEl = styled(Menu)`
   background-color: ${theme.colors.primary};
-font-family: K2D, sans-serif;
-
+  font-family: K2D, sans-serif;
 
   .ant-menu-item-icon {
     font-size: 1.1rem !important;
     color: ${theme.colors.white} !important;
   }
 
-  .ant-menu-item {
+  .item{
+    // margin:0 ${({ collapsed }) => (collapsed ? "" : ".25rem")};
+
+    &.ant-menu-submenu-open, &.ant-menu-submenu-active{
+      background-color: ${theme.colors.blue} !important;
+    }
+  }
+
+  .ant-menu-item, .item {
     color: ${theme.colors.white} !important;
     padding-left: ${({ collapsed }) => (collapsed ? "" : "1rem")}!important;
 
@@ -36,6 +44,12 @@ font-family: K2D, sans-serif;
     &.ant-menu-item-selected {
       background-color: ${theme.colors.orange} !important;
     }
+
+    & .ant-menu-submenu-title{
+      padding-left: ${({ collapsed }) => (collapsed ? "" : "0px")}!important;
+      background: transparent!important;
+       color: ${theme.colors.white};
+    }
   }
 
   .div {
@@ -45,6 +59,7 @@ font-family: K2D, sans-serif;
       background-color: transparent !important;
     }
   }
+
 `;
 
 export const SiderEl = styled(Layout.Sider)`
@@ -63,6 +78,7 @@ export const HeaderEl = styled(Layout.Header)`
 `;
 
 export const CollapseButton = styled(Button)`
+  z-index: 1;
   background-color: ${({ collapsed }) =>
     collapsed ? "transparent" : theme.colors.blue};
   border: none;
@@ -106,8 +122,8 @@ export const FavLogo = styled.div`
 
   .username {
     margin-left: 1rem;
-    color: ${theme.colors.white}; 
-    font-size: 1rem; 
+    color: ${theme.colors.white};
+    font-size: 1rem;
     font-weight: bold;
   }
 `;
