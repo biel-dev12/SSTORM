@@ -72,7 +72,7 @@ const App = () => {
             <Link to="/logout">Configurações</Link>
           </MenuEl.Item>
           <MenuEl.Item key="6" icon={<MdExitToApp />} className="user-item">
-            <Link to="/logout">Sair</Link>
+            <Link to="/login">Sair</Link>
           </MenuEl.Item>
         </MenuEl>
       </SiderEl>
