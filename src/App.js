@@ -25,15 +25,15 @@ export const MenuEl = styled(Menu)`
     color: ${theme.colors.white} !important;
   }
 
-  .item{
-    // margin:0 ${({ collapsed }) => (collapsed ? "" : ".25rem")};
-
-    &.ant-menu-submenu-open, &.ant-menu-submenu-active{
+  .item {
+    &.ant-menu-submenu-open,
+    &.ant-menu-submenu-active {
       background-color: ${theme.colors.blue} !important;
     }
   }
 
-  .ant-menu-item, .item {
+  .ant-menu-item,
+  .item {
     color: ${theme.colors.white} !important;
     padding-left: ${({ collapsed }) => (collapsed ? "" : "1rem")}!important;
 
@@ -45,10 +45,10 @@ export const MenuEl = styled(Menu)`
       background-color: ${theme.colors.orange} !important;
     }
 
-    & .ant-menu-submenu-title{
+    & .ant-menu-submenu-title {
       padding-left: ${({ collapsed }) => (collapsed ? "" : "0px")}!important;
-      background: transparent!important;
-       color: ${theme.colors.white};
+      background: transparent !important;
+      color: ${theme.colors.white};
     }
   }
 
@@ -59,7 +59,6 @@ export const MenuEl = styled(Menu)`
       background-color: transparent !important;
     }
   }
-
 `;
 
 export const SiderEl = styled(Layout.Sider)`
@@ -143,22 +142,22 @@ export const Logo = styled.div`
     padding: 0.2rem;
 
     img {
-      width: 40%; // Tamanho base
+      width: 40%;
 
       @media screen and (max-width: 576px) {
-        width: 35%; // Aumenta o tamanho em telas pequenas
+        width: 35%;
       }
 
       @media screen and (min-width: 576px) and (max-width: 768px) {
-        width: 35%; // Ajuste para telas médias
+        width: 35%;
       }
 
       @media screen and (min-width: 768px) and (max-width: 992px) {
-        width: 20%; // Ajuste intermediário
+        width: 20%;
       }
 
       @media screen and (min-width: 992px) {
-        width: 15%; // Tamanho padrão para telas grandes
+        width: 15%;
       }
     }
   }

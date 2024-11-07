@@ -38,15 +38,19 @@ export const Form = styled.form`
 
 export const Title = styled.h1`
   margin: 0;
-  color: ${theme.colors.blue};
+  color: ${theme.colors.orange};
   letter-spacing: 1px;
 `;
 
 export const InputsDiv = styled.div`
   height: inherit;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  gap: 1rem;
 `;
 
 export const Field = styled.div`
@@ -62,11 +66,11 @@ export const Field = styled.div`
     letter-spacing: 1px;
   }
 
-  input {
+  input, select {
     width: 16rem;
     background-color: ${theme.colors.white};
     color: ${theme.colors.text};
-    border: 1px solid ${theme.colors.green};
+    border: 1px solid ${theme.colors.blue};
     padding: .3rem .5rem;
     border-radius: 8px;
     outline: none;
@@ -83,12 +87,12 @@ export const Btn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${theme.colors.green};
-  border: 1px solid ${theme.colors.green};
+  background-color: ${theme.colors.blue};
+  border: 1px solid ${theme.colors.blue};
   transition: all 0.2s;
 
   &:hover {
-    background-color: ${theme.colors.blue};
+    background-color: ${theme.colors.green};
     border: none;
   }
 `;
@@ -96,11 +100,11 @@ export const Btn = styled.button`
 export const Option = styled.h3`
   margin-top: 2rem;
   font-weight: 600;
-  color: ${theme.colors.orange};
+  color: ${theme.colors.blue};
 
   span {
     font-weight: 600;
-    color: ${theme.colors.green};
+    color: ${theme.colors.orange};
     text-decoration: underline;
 
     &:hover {

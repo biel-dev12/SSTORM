@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
 import { Outlet, Link } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 import {
   LayoutEl,
   HeaderEl,
@@ -92,6 +93,7 @@ const App = () => {
         </HeaderEl>
         <ContentEl collapsed={collapsed}>
           <Outlet />
+          <ToastContainer />
         </ContentEl>
       </LayoutEl>
     </LayoutEl>

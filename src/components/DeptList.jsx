@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchDept } from "../api/deptService.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const UserList = () => {
+const DeptList = () => {
     const [depts, setDepts] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -13,6 +15,7 @@ const UserList = () => {
             }
             catch (error) {
                 console.error("Erro ao buscar Usuarios: ", error)
+                toast.error("Erro ao carregar os departamentos");
             }
             finally{
                 setLoading(false)
@@ -22,18 +25,24 @@ const UserList = () => {
         loadDepts();
     }, [])
 
-    if (loading) return <p>Carregando departamentos...</p>
-
     return (
-        <>
-            <h2>Departamentos:</h2>
-            <ul>
-                {depts.map(user => (
-                    <li key={user.id_dept}>{user.nm_dept}</li>
-                ))}
-            </ul>
-        </>
+        <select name="dept" id="dept">
+            {loading ? (
+                <option value="loading">Carregando...</option>
+            ) : (
+                depts.length > 0 ? (
+                    depts.map((dept) => (
+                        <option value={dept.nm_dept} key={dept.id_dept}>
+                            {dept.nm_dept}
+                        </option>
+                    ))
+                ) : (
+                    <option value="no-depts">Nenhum departamento encontrado</option>
+                )
+            )}
+        </select>
+        
     )
 }
 
-export default UserList;
+export default DeptList;

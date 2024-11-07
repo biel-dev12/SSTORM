@@ -1,4 +1,5 @@
-import { Main, Form, Title, InputsDiv, Field, Btn } from "./style";
+import { Main, Form, Title, InputsDiv, Field, Btn, Option } from "./style";
+import { Link } from "react-router-dom";
 
 function Login() {
   return (
@@ -8,7 +9,7 @@ function Login() {
 
         <InputsDiv>
           <Field>
-            <label htmlFor="username">Nome de usuário:</label>
+            <label htmlFor="username">Usuário:</label>
             <input
               type="text"
               name="username"
@@ -22,7 +23,9 @@ function Login() {
           </Field>
         </InputsDiv>
 
-      <Btn>Entrar</Btn>
+      <Btn type="submit">Entrar</Btn>
+
+      <Option>Ainda Não tem uma conta?<Link to="/signup"><span>Cadastre-se!</span></Link></Option>
       </Form>
     </Main>
   );
