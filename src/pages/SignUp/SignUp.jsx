@@ -1,53 +1,108 @@
 import { Main, Form, Title, InputsDiv, Field, Btn, Option } from "./style";
 import { Link } from "react-router-dom";
-import DeptList from '../../components/DeptList'
-
+import { useState, useEffect } from "react";
+import DeptList from "../../components/DeptList";
+import { toast } from "react-toastify";
 
 function SignUp() {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    dept: "",
+    email: "",
+    newPassw: "",
+    cPassw: "",
+    username: "",
+  })
+
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const [firstName, lastName] = formData.fullname.split(" ");
+
+    if(firstName && lastName && formData.dept) {
+      const username = `${firstName.toLocaleLowerCase() + lastName[0].toUpperCase()}_${formData.dept}`
+      setFormData((prev) => ({...prev, username}))
+    }
+  }, [formData.fullname, formData.dept])
+
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    setFormData((prev) => ({...prev, [name]: value}))
+  }
+
+  const handleDeptChange = (dept) => {
+    setFormData((prev) => ({ ...prev, dept }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (formData.newPassw !== formData.cPassw) {
+      toast.error("As senhas não coincidem");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await registerUser(formData); 
+      toast.success("Usuário cadastrado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao cadastrar usuário:", error);
+      toast.error("Erro ao cadastrar o usuário.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Main>
-      <Form action="">
+      <Form onSubmit={handleSubmit}>
         <Title>Criar conta</Title>
 
         <InputsDiv>
           <Field>
             <label htmlFor="fullname">Nome Completo:</label>
-            <input
-              type="text"
-              name="fullname"
-              id="fullname"
-            />
+            <input type="text" name="fullname" id="fullname" value={formData.fullname} onChange={handleChange} required />
           </Field>
           <Field>
             <label htmlFor="dept">Seu Depto:</label>
-            <DeptList />
+            <DeptList selectedDept={formData.dept} onDeptChange={handleDeptChange} />
           </Field>
           <Field>
             <label htmlFor="username">Nome de usuário (anote):</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              disabled
-            />
+            <input type="text" name="username" id="username" value={formData.username} disabled />
           </Field>
           <Field>
             <label htmlFor="email">E-mail:</label>
-            <input type="email" name="email" id="email" placeholder="gabriel@doctorspraigrande.com.br" />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="gabriel@doctorspraigrande.com.br"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </Field>
           <Field>
-          <label htmlFor="newPassw">Crie uma senha:</label>
-          <input type="password" name="newPassw" id="newPassw" />
+            <label htmlFor="newPassw">Crie uma senha:</label>
+            <input type="password" name="newPassw" id="newPassw" value={formData.newPassw} onChange={handleChange} required />
           </Field>
           <Field>
             <label htmlFor="cPassw">Confirme a senha:</label>
-            <input type="password" name="cPassw" id="cPassw" />
+            <input type="password" name="cPassw" id="cPassw" value={formData.cPassw} onChange={handleChange} required />
           </Field>
         </InputsDiv>
 
-      <Btn type="submit">Entrar</Btn>
+        <Btn type="submit" disabled={loading}>{loading ? "Enviando..." : "Entrar"}</Btn>
 
-      <Option>Jà tem uma conta?<Link to="/login"><span>Entrar!</span></Link></Option>
+        <Option>
+          Jà tem uma conta?
+          <Link to="/login">
+            <span>Entrar!</span>
+          </Link>
+        </Option>
       </Form>
     </Main>
   );

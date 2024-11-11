@@ -3,30 +3,35 @@ import { fetchDept } from "../api/deptService.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const DeptList = () => {
-    const [depts, setDepts] = useState([])
-    const [loading, setLoading] = useState(true)
+const DeptList = ({ selectedDept, onDeptChange }) => {
+    const [depts, setDepts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadDepts = async () => {
-            try{
+            try {
                 const deptsData = await fetchDept();
                 setDepts(deptsData);
-            }
-            catch (error) {
-                console.error("Erro ao buscar Usuarios: ", error)
+            } catch (error) {
                 toast.error("Erro ao carregar os departamentos");
+            } finally {
+                setLoading(false);
             }
-            finally{
-                setLoading(false)
-            }
-        }
+        };
 
         loadDepts();
-    }, [])
+    }, []);
+
+    const handleDeptChange = (e) => {
+        const selectedValue = e.target.value;
+        if (selectedValue !== "default") {
+            onDeptChange(selectedValue);
+        }
+    };
 
     return (
-        <select name="dept" id="dept">
+        <select name="dept" id="dept" value={selectedDept || "default"} onChange={handleDeptChange}>
+            <option value="default" disabled>Selecione:</option>
             {loading ? (
                 <option value="loading">Carregando...</option>
             ) : (
@@ -41,8 +46,7 @@ const DeptList = () => {
                 )
             )}
         </select>
-        
-    )
-}
+    );
+};
 
 export default DeptList;
