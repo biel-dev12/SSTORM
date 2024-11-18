@@ -1,5 +1,6 @@
-// Route.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./components/AuthContext.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import App from "./App.jsx";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
@@ -8,16 +9,18 @@ import SignUp from "./pages/SignUp/SignUp";
 
 const AppRoutes = () => {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<Home />} /> 
-          <Route path="login" element={<Login />} /> 
-          <Route path="signup" element={<SignUp />} /> 
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         </Route>
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 

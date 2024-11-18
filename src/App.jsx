@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useAuth  } from "./components/AuthContext.jsx";
+import { useState, useEffect } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import {
   LayoutEl,
@@ -18,7 +19,20 @@ import {
 } from "./App.js";
 
 const App = () => {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <LayoutEl>
@@ -73,7 +87,8 @@ const App = () => {
             <Link to="/logout">Configurações</Link>
           </MenuEl.Item>
           <MenuEl.Item key="6" icon={<MdExitToApp />} className="user-item">
-            <Link to="/login">Sair</Link>
+            {/* <Link to="/login">Sair</Link> */}
+            <span onClick={handleLogout}>Sair</span>
           </MenuEl.Item>
         </MenuEl>
       </SiderEl>

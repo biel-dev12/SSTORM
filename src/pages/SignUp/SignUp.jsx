@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DeptList from "../../components/DeptList";
 import { toast } from "react-toastify";
+import { registerUser } from "../../api/userService.js";
 
 function SignUp() {
   const [formData, setFormData] = useState({
     fullname: "",
     dept: "",
     email: "",
+    username: "",
     newPassw: "",
     cPassw: "",
-    username: "",
   })
 
   const [loading, setLoading] = useState(false)
@@ -44,11 +45,11 @@ function SignUp() {
       return;
     }
 
+    console.log(formData)
     try {
       await registerUser(formData); 
       toast.success("Usuário cadastrado com sucesso!");
     } catch (error) {
-      console.error("Erro ao cadastrar usuário:", error);
       toast.error("Erro ao cadastrar o usuário.");
     } finally {
       setLoading(false);

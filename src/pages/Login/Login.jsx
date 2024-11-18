@@ -1,10 +1,29 @@
 import { Main, Form, Title, InputsDiv, Field, Btn, Option } from "./style";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../components/AuthContext";
 
 function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    const username = e.target.username.value;
+    const passw = e.target.passw.value;
+  
+    if (username === "ADM_Tec" && passw === "1234") {
+      login();  
+      navigate("/home");
+    } else {
+      alert("Usuário ou senha inválidos!");
+    }
+  };
+
   return (
     <Main>
-      <Form action="">
+      <Form onSubmit={handleSubmit}>
         <Title>Entrar</Title>
 
         <InputsDiv>
