@@ -1,5 +1,5 @@
 import { useAuth  } from "./components/AuthContext.jsx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
 import { Outlet, Link, useNavigate } from "react-router-dom";
@@ -23,15 +23,15 @@ const App = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(true);
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login");
+  //   }
+  // }, [user, navigate]);
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/signup");
   };
 
   return (
@@ -56,7 +56,7 @@ const App = () => {
           collapsed={collapsed}
         >
           <MenuEl.Item key="1" icon={<MdHome />}>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </MenuEl.Item>
 
           <MenuEl.SubMenu
@@ -84,11 +84,10 @@ const App = () => {
           )}
 
           <MenuEl.Item key="5" icon={<MdSettings />} className="user-item">
-            <Link to="/logout">Configurações</Link>
+            <Link to="/settings">Configurações</Link>
           </MenuEl.Item>
-          <MenuEl.Item key="6" icon={<MdExitToApp />} className="user-item">
-            {/* <Link to="/login">Sair</Link> */}
-            <span onClick={handleLogout}>Sair</span>
+          <MenuEl.Item key="6" icon={<MdExitToApp />} className="user-item" onClick={handleLogout}>
+            Sair
           </MenuEl.Item>
         </MenuEl>
       </SiderEl>

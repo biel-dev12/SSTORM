@@ -96,7 +96,7 @@ function SignUp() {
           </Field>
         </InputsDiv>
 
-        <Btn type="submit" disabled={loading}>{loading ? "Enviando..." : "Entrar"}</Btn>
+        <Btn type="submit" disabled={loading}>{loading ? "Cadastrando..." : "Cadastrar"}</Btn>
 
         <Option>
           Jà tem uma conta?
