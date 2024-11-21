@@ -2,13 +2,14 @@ import { Main, Form, Title, InputsDiv, Field, Btn, Option } from "./style";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { loginUser } from "../../api/userService";
 
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -24,29 +25,26 @@ function Login() {
     e.preventDefault();
     setLoading(true);
 
-    if(!formData.username || !formData.passw){
-      toast.error("Preencha todos os campos!")
+    if (!formData.username || !formData.passw) {
+      toast.error("Preencha todos os campos!");
       setLoading(false);
-      return
+      return;
     }
 
-    try{
-      await loginUser(formData)
-      toast.success("Logado com sucesso!");
-    }
-    catch (error){
-      toast.error("Usuário ou/e senha incorreto(s)!")
-    }
-     finally {
+    try {
+      const { user } = await loginUser(formData);
+      toast.success("Login realizado com sucesso!", {
+        autoClose: 1000
+      });
+      setTimeout(() => {
+        login(user);
+        navigate("/home");
+      }, 1000);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
       setLoading(false);
     }
-
-    // if (formData.username === "ADM_Tec" && formData.passw === "1234") {
-    //   login();
-    //   navigate("/home");
-    // } else {
-    //   toast.error("Usuário ou senha inválidos!");
-    // }
   };
 
   return (
@@ -78,8 +76,9 @@ function Login() {
           </Field>
         </InputsDiv>
 
-        <Btn type="submit" disabled={loading}>{loading ? "Entrando..." : "Entrar"}</Btn>
-
+        <Btn type="submit" disabled={loading}>
+          {loading ? "Entrando..." : "Entrar"}
+        </Btn>
 
         <Option>
           Ainda Não tem uma conta?

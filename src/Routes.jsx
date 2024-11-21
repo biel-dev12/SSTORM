@@ -12,7 +12,7 @@ const AppRoutes = () => {
     <AuthProvider>
       <Router>
         <Routes>
-        <Route path="/" element={<App />}>
+        <Route element={<App />}>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />

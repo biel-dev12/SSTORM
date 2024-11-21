@@ -1,9 +1,9 @@
-import { useAuth  } from "./components/AuthContext.jsx";
-import { useState } from "react";
+import { useAuth } from "./components/AuthContext.jsx";
+import { useState, useEffect } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import {
   LayoutEl,
   HeaderEl,
@@ -15,23 +15,24 @@ import {
   CloseMenu,
   OpenMenu,
   CollapseButton,
-  Divider
+  Divider,
 } from "./App.js";
 
 const App = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(true);
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/login");
-  //   }
-  // }, [user, navigate]);
+  const username = user?.username || "Visitante";
+ 
 
   const handleLogout = () => {
-    logout();
-    navigate("/signup");
+    toast.info("Saindo...", {
+      autoClose: 500,
+    });
+    setTimeout(() => {
+      logout();
+      navigate("/login");
+    }, 1000);
   };
 
   return (
@@ -42,13 +43,15 @@ const App = () => {
         collapsed={collapsed}
         collapsedWidth={50}
       >
-         <FavLogo>
+        <FavLogo>
           <div className="img-box">
             <img src="./src/assets/doctors-fav.svg" alt="Logo" />
           </div>
-          {!collapsed && <div className="username">Gabriel_tec</div>}
+          {!collapsed && (
+            <div className="username">{username}</div>
+          )}
         </FavLogo>
-        
+
         <MenuEl
           theme="dark"
           mode="inline"
@@ -86,7 +89,12 @@ const App = () => {
           <MenuEl.Item key="5" icon={<MdSettings />} className="user-item">
             <Link to="/settings">Configurações</Link>
           </MenuEl.Item>
-          <MenuEl.Item key="6" icon={<MdExitToApp />} className="user-item" onClick={handleLogout}>
+          <MenuEl.Item
+            key="6"
+            icon={<MdExitToApp />}
+            className="user-item"
+            onClick={handleLogout}
+          >
             Sair
           </MenuEl.Item>
         </MenuEl>
