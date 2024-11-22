@@ -83,6 +83,7 @@ export const Btn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${theme.colors.white};
   background-color: ${theme.colors.green};
   border: 1px solid ${theme.colors.green};
   transition: all 0.2s;

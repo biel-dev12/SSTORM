@@ -77,6 +77,7 @@ export const HeaderEl = styled(Layout.Header)`
 `;
 
 export const CollapseButton = styled(Button)`
+  position: absolute;
   z-index: 1;
   background-color: ${({ collapsed }) =>
     collapsed ? "transparent" : theme.colors.blue};
@@ -129,9 +130,6 @@ export const FavLogo = styled.div`
 
 export const Logo = styled.div`
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: transparent;
 
   .img-box {

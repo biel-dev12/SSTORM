@@ -26,9 +26,11 @@ const App = () => {
  
 
   const handleLogout = () => {
-    toast.info("Saindo...", {
-      autoClose: 500,
-    });
+    if(user){
+      toast.info("Saindo...", {
+        autoClose: 500,
+      });
+    }
     setTimeout(() => {
       logout();
       navigate("/login");
@@ -59,20 +61,20 @@ const App = () => {
           collapsed={collapsed}
         >
           <MenuEl.Item key="1" icon={<MdHome />}>
-            <Link to="/home">Home</Link>
+            <Link to="/home">Página Inicial</Link>
           </MenuEl.Item>
 
           <MenuEl.SubMenu
             key="2"
-            title="Docs"
+            title="Gestão de Docs"
             icon={<TbFileAnalytics />}
             className="item"
           >
             <MenuEl.Item key="2.1">
-              <Link to="/docs/option1">Option 1</Link>
+              <Link to="/docs/pgr-pcmso">PGR / PCMSO</Link>
             </MenuEl.Item>
             <MenuEl.Item key="2.2">
-              <Link to="/docs/option2">Option 2</Link>
+              <Link to="/docs/ltcat">LTCAT</Link>
             </MenuEl.Item>
           </MenuEl.SubMenu>
 

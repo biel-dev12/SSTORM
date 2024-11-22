@@ -16,9 +16,10 @@ export const theme = {
     },
     fonts: {
       small: '12px',
-      medium: '16px',
-      large: '20px',
-      xlarge: '24px',
+      xsmall: '16px',
+      medium: '20px',
+      large: '32px',
+      xlarge: '38px',
     },
     spacing: {
       small: '8px',

@@ -86,6 +86,7 @@ export const Btn = styled.button`
   height: 2.5rem;
   display: flex;
   justify-content: center;
+  color: ${theme.colors.white};
   align-items: center;
   background-color: ${theme.colors.blue};
   border: 1px solid ${theme.colors.blue};
