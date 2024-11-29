@@ -7,12 +7,14 @@ export const LayoutEl = styled(Layout)`
   width: 100vw;
   height: 100vh;
   background-color: ${theme.colors.background};
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const ContentEl = styled(Layout.Content)`
   filter: ${({ collapsed }) => (collapsed ? "none" : "blur(1px)")};
   padding: 0 10px;
-  min-height: 280px;
+  min-height: calc(100vh - 8vh);
   background: ${theme.colors.background};
 `;
 

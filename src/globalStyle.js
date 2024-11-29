@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
     min-width: 320px;
     min-height: 100vh;
     font-size: 32px;
+    overflow-x: hidden;
 
   }
 
