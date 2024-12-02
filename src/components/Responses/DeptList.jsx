@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchDept } from "../api/deptService.js";
+import { fetchDept } from "../../api/deptService.js";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const DeptList = ({ selectedDept, onDeptChange }) => {
     const [depts, setDepts] = useState([]);
@@ -37,7 +36,7 @@ const DeptList = ({ selectedDept, onDeptChange }) => {
             ) : (
                 depts.length > 0 ? (
                     depts.map((dept) => (
-                        <option value={dept.nm_dept} key={dept.id_dept}>
+                        <option value={dept.id_segment} key={dept.id_dept}>
                             {dept.nm_dept}
                         </option>
                     ))

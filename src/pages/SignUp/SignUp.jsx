@@ -1,7 +1,7 @@
 import { Main, Form, Title, InputsDiv, Field, Btn, Option } from "./style";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import DeptList from "../../components/DeptList";
+import DeptList from "../../components/Responses/DeptList";
 import { toast } from "react-toastify";
 import { registerUser } from "../../api/userService.js";
 

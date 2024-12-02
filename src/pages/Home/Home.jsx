@@ -22,10 +22,15 @@ import {
   PendingIcon,
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
-import { Dropdown, Modal } from "antd";
+import { Dropdown } from "antd";
+import ModalAddComp from "../../components/Modals/ModalAddComp/ModalAddComp";
+import ModalEditComp from "../../components/Modals/ModalEditComp";
+import ModalDelComp from "../../components/Modals/ModalDelComp";
 
 const Home = () => {
-  const [modal1Open, setModal1Open] = useState(false);
+  const [modal1Visible, setModal1Visible] = useState(false);
+  const [modal2Visible, setModal2Visible] = useState(false);
+  const [modal3Visible, setModal3Visible] = useState(false);
 
   const items = [
     {
@@ -81,29 +86,30 @@ const Home = () => {
           </ChoiceBox>
         </SearchBox>
         <ActionsBox>
-          <ActionBtn type="primary" id="add-emp" onClick={() => setModal1Open(true)}>
-          <Modal
-        title="Vertically centered modal dialog"
-        centered
-        open={modal1Open}
-        onOk={() => setModal1Open(false)}
-        onCancel={() => setModal1Open(false)}
-      >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
-      </Modal>
+          <ActionBtn
+            type="primary"
+            id="add-emp"
+            onClick={() => setModal1Visible(true)}
+          >
             <div>
               <MdAddCircle className="icon" />
               <span>Incluir Emp.</span>
             </div>
           </ActionBtn>
-          <ActionBtn id="edit-emp">
+          <ActionBtn
+            id="edit-emp"
+            type="primary"
+            onClick={() => setModal2Visible(true)}
+          >
             <div>
               <MdOutlineBorderColor className="icon" /> <span>Editar Emp.</span>
             </div>
           </ActionBtn>
-          <ActionBtn id="del-emp">
+          <ActionBtn
+            id="del-emp"
+            type="primary"
+            onClick={() => setModal3Visible(true)}
+          >
             <div>
               <MdDelete className="icon" />
               <span>Excluir Emp.</span>
@@ -200,6 +206,19 @@ const Home = () => {
             </HeaderCard>
           </Card>
         </CardsBox>
+
+        <ModalAddComp
+          visible={modal1Visible}
+          onClose={() => setModal1Visible(false)}
+        />
+        <ModalEditComp
+          visible={modal2Visible}
+          onClose={() => setModal2Visible(false)}
+        />
+        <ModalDelComp
+          visible={modal3Visible}
+          onClose={() => setModal3Visible(false)}
+        />
       </Main>
     </>
   );
