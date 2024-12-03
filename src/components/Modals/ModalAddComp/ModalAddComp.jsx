@@ -3,8 +3,11 @@ import { Modal } from "antd";
 import SegmentList from "../../Responses/SegmentList";
 import { Form, InputBox, Label, Input } from "./style";
 import { API_URL, api } from "../../../api/config";
+import { useAuth } from "../../AuthContext";
 
 const ModalAddComp = ({ visible, onClose }) => {
+  const { user } = useAuth()
+
   const [formData, setFormData] = useState({
     compCond: "E",
     fatntasyName: "",
@@ -19,17 +22,22 @@ const ModalAddComp = ({ visible, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await api.post(`${API_URL}/companies`, formData);
-      if (response.status === 201) {
-        toast.success("Empresa criada com sucesso!");
-        onClose();
-      } else {
-        throw new Error("Erro ao criar empresa");
-      }
-    } catch (error) {
-      toast.error("Erro ao criar empresa. Verifique os dados e tente novamente.");
-    }
+    const payload = { ...formData, userId: user?.id_user }
+    const data = JSON.stringify(payload)
+    alert(data)
+    // try {
+    //   const payload = { ...formData, userId: user?.id_user }
+
+    //   const response = await api.post(`${API_URL}/companies`, payload);
+    //   if (response.status === 201) {
+    //     toast.success("Empresa criada com sucesso!");
+    //     onClose();
+    //   } else {
+    //     throw new Error("Erro ao criar empresa");
+    //   }
+    // } catch (error) {
+    //   toast.error("Erro ao criar empresa. Verifique os dados e tente novamente.");
+    // }
   };
 
   return (
