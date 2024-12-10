@@ -7,6 +7,7 @@ import { useAuth } from "../../AuthContext";
 
 const ModalAddComp = ({ visible, onClose }) => {
   const { user } = useAuth()
+  console.log("Usuário no contexto:", user);
 
   const [formData, setFormData] = useState({
     compCond: "E",
@@ -23,8 +24,12 @@ const ModalAddComp = ({ visible, onClose }) => {
 
   const handleSubmit = async () => {
     const payload = { ...formData, userId: user?.id_user }
-    const data = JSON.stringify(payload)
-    alert(data)
+    alert(`compCond: ${formData.compCond}
+           name: ${formData.fatntasyName}
+           cnpj: ${formData.cnpj}
+           segment: ${formData.segment}
+           month: ${formData.monthValidity}
+           user: ${user?.id_user}; `)
     // try {
     //   const payload = { ...formData, userId: user?.id_user }
 

@@ -8,10 +8,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-
+    console.log("Usuário armazenado no localStorage:", storedUser);
+  
     if (storedUser && storedUser !== "undefined") {
       try {
         const parsedUser = JSON.parse(storedUser);
+        console.log("Usuário parseado:", parsedUser);
         setUser(parsedUser);
       } catch (error) {
         console.error("Erro ao parsear o JSON:", error);
@@ -20,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
+    console.log("User data recebido para login:", userData);
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };
