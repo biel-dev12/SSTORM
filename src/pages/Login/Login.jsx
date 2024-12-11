@@ -32,16 +32,20 @@ function Login() {
     }
 
     try {
-      const { user } = await loginUser(formData);
-      toast.success("Login realizado com sucesso!", {
-        autoClose: 1000
-      });
-      setTimeout(() => {
-        login(user);
-        navigate("/home");
-      }, 1000);
+      const user = await loginUser(formData);
+      console.log(user.id_user)
+      if (user?.id_user) {
+        login(user); // Armazena o usuário no contexto
+        toast.success("Login realizado com sucesso!", { autoClose: 1000 });
+
+        setTimeout(() => {
+          navigate("/home");
+        }, 1000);
+      } else {
+        throw new Error("Usuário não encontrado.");
+      }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message || "Erro ao fazer login.");
     } finally {
       setLoading(false);
     }
