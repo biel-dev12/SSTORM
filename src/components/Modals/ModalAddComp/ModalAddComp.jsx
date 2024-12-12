@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Modal } from "antd";
 import SegmentList from "../../Responses/SegmentList";
 import { Form, InputBox, Label, Input } from "./style";
-import { API_URL, api } from "../../../api/config";
 import { useAuth } from "../../AuthContext";
 import { toast } from "react-toastify";
+import { newCompany } from "../../../api/companyService";
 
 const ModalAddComp = ({ visible, onClose }) => {
   const { user } = useAuth();
@@ -36,28 +36,18 @@ const ModalAddComp = ({ visible, onClose }) => {
       return;
     }
 
-    alert(`Dados enviados:
-      CompCond: ${formData.compCond}
-      Nome: ${formData.fantasyName}
-      CNPJ: ${formData.cnpj}
-      Segmento: ${formData.segment}
-      Mês de Vigência: ${formData.monthValidity}
-      Usuário: ${user?.id_user}`
-    );
+    if(!formData.segment || !formData.fantasyName || !formData.cnpj){
+      toast.warn("Preencha todos os campos!", {autoClose: 800})
+      return
+    }
+    else if(formData.cnpj.length < 18){
+      toast.warn("Preencha o CNPJ corretamente!", {autoClose: 800})
+      return
+    }
 
-    // try {
-    //   const payload = { ...formData, userId: user?.id_user };
-    //   const response = await api.post(`${API_URL}/companies`, payload);
-      
-    //   if (response.status === 201) {
-    //     toast.success("Empresa criada com sucesso!");
-    //     onClose();
-    //   } else {
-    //     throw new Error("Erro ao criar empresa");
-    //   }
-    // } catch (error) {
-    //   toast.error("Erro ao criar empresa. Verifique os dados e tente novamente.");
-    // }
+    const companyData = { ...formData, userId: user?.id_user };
+
+    newCompany(companyData);
   };
 
   return (

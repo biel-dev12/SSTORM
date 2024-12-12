@@ -3,12 +3,12 @@ import { createContext, useContext, useState, useEffect } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado de carregamento
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-  
+
     if (storedUser && storedUser !== "undefined") {
       try {
         const parsedUser = JSON.parse(storedUser);
@@ -17,12 +17,10 @@ export const AuthProvider = ({ children }) => {
         console.error("Erro ao parsear o JSON:", error);
       }
     }
+    setLoading(false); // Carregamento concluído
   }, []);
 
   const login = (userData) => {
-    // console.log("User data recebido para login:", userData);
-    // setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
     if (userData && userData.id_user) {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
@@ -37,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
