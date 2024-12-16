@@ -20,17 +20,46 @@ import {
   TextStatus,
   CheckIcon,
   PendingIcon,
+  CompanyDisplay
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
+import { IoArrowUndo } from "react-icons/io5";
 import { Dropdown } from "antd";
 import ModalAddComp from "../../components/Modals/ModalAddComp/ModalAddComp";
-import ModalEditComp from "../../components/Modals/ModalEditComp";
-import ModalDelComp from "../../components/Modals/ModalDelComp";
+import ModalEditComp from "../../components/Modals/ModalEditComp/ModalEditComp";
+import ModalDelComp from "../../components/Modals/ModalDelComp/ModalDelComp";
+import { getCompany } from "../../api/companyService";
+import { toast } from "react-toastify";
+
 
 const Home = () => {
   const [modal1Visible, setModal1Visible] = useState(false);
   const [modal2Visible, setModal2Visible] = useState(false);
   const [modal3Visible, setModal3Visible] = useState(false);
+
+  const [searchType, setSearchType] = useState("name");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+  
+    if (!searchQuery.trim()) {
+      toast.warn("Por favor, insira um valor de busca.", { autoClose: 700 });
+      return;
+    }
+  
+   await getCompany(searchType, searchQuery, setSelectedCompany);
+  };
+  
+
+  const handleCnpjMask = (value) => {
+    const cnpj = value.replace(/\D/g, "").slice(0, 14);
+    return cnpj.replace(
+      /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/,
+      "$1.$2.$3/$4-$5"
+    );
+  };
 
   const items = [
     {
@@ -50,7 +79,13 @@ const Home = () => {
   return (
     <>
       <Main>
-        <SearchBox>
+        {selectedCompany && (
+          <CompanyDisplay>
+            <IoArrowUndo className="icon" onClick={() => setSelectedCompany(null)}/> Empresa atual: <span>{selectedCompany.nm_comp_name}</span>
+          </CompanyDisplay>
+        )}
+
+        <SearchBox onSubmit={handleSearch}>
           <CompanyLabel htmlFor="search">Empresa:</CompanyLabel>
           <ChoiceBox>
             <RadioBox>
@@ -61,7 +96,11 @@ const Home = () => {
                   id="name"
                   name="search-radio"
                   value="name"
-                  checked
+                  checked={searchType === "name"}
+                  onChange={() => {
+                    setSearchType("name");
+                    setSearchQuery("");
+                  }}
                 />
               </Radio>
 
@@ -72,12 +111,32 @@ const Home = () => {
                   id="cnpj"
                   name="search-radio"
                   value="cnpj"
+                  checked={searchType === "cnpj"}
+                  onChange={() => {
+                    setSearchType("cnpj");
+                    setSearchQuery("");
+                  }}
                 />
               </Radio>
             </RadioBox>
             <InputBox>
-              <input type="text" name="search" id="search" />
-              <button>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder={`Digite o ${
+                  searchType === "name" ? "nome" : "CNPJ"
+                } da empresa`}
+                value={searchQuery}
+                onChange={(e) =>
+                  setSearchQuery(
+                    searchType === "cnpj"
+                      ? handleCnpjMask(e.target.value)
+                      : e.target.value
+                  )
+                }
+              />
+              <button type="submit">
                 <span>
                   <SearchIcon />
                 </span>
@@ -99,7 +158,13 @@ const Home = () => {
           <ActionBtn
             id="edit-emp"
             type="primary"
-            onClick={() => setModal2Visible(true)}
+            onClick={() => {
+              if (selectedCompany) {
+                setModal2Visible(true);
+              } else {
+                toast.warn("Selecione uma empresa para editar.", { autoClose: 1000 });
+              }
+            }}
           >
             <div>
               <MdOutlineBorderColor className="icon" /> <span>Editar Emp.</span>
@@ -108,7 +173,13 @@ const Home = () => {
           <ActionBtn
             id="del-emp"
             type="primary"
-            onClick={() => setModal3Visible(true)}
+            onClick={() => {
+              if (selectedCompany) {
+                setModal3Visible(true);
+              } else {
+                toast.warn("Selecione uma empresa para excluir.", { autoClose: 1000 });
+              }
+            }}
           >
             <div>
               <MdDelete className="icon" />
@@ -214,10 +285,12 @@ const Home = () => {
         <ModalEditComp
           visible={modal2Visible}
           onClose={() => setModal2Visible(false)}
+          companyData={selectedCompany}
         />
         <ModalDelComp
           visible={modal3Visible}
           onClose={() => setModal3Visible(false)}
+          companyData={selectedCompany}
         />
       </Main>
     </>

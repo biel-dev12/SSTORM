@@ -1,5 +1,5 @@
 import { useAuth } from "./components/AuthContext.jsx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
 import { Outlet, Link, useNavigate } from "react-router-dom";

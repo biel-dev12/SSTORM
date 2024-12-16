@@ -100,6 +100,7 @@ export const InputBox = styled.div`
     justify-content: center;
     border-radius: 0px;
     transition: all 0.3s;
+    outline: none;
     color: ${theme.colors.orange};
     span {
       display: flex;
@@ -330,9 +331,43 @@ export const Drop = styled.div`
   display: block;
   margin-top: 8px;
 
-  
-
   @media (max-width: 768px) {
     width: 150px; /* Ajuste conforme o tamanho da tela */
+  }
+`;
+
+export const CompanyDisplay = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  padding: 10px 15px;
+  background: ${theme.colors.background};
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${theme.colors.text};
+  transition: all 0.3s ease-in-out;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  .icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    color: ${theme.colors.orange};
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 3px;
+
+    &:hover {
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.orange};
+    }
+  }
+
+  span {
+    color: ${theme.colors.blue};
   }
 `;

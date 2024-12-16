@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "antd";
 import SegmentList from "../../Responses/SegmentList";
 import { Form, InputBox, Label, Input } from "./style";
 import { useAuth } from "../../AuthContext";
 import { toast } from "react-toastify";
-import { newCompany } from "../../../api/companyService";
+import { updateCompany } from "../../../api/companyService";
 
-const ModalAddComp = ({ visible, onClose }) => {
+const ModalEditComp = ({ visible, onClose, companyData }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     compCond: "E",
@@ -15,6 +15,19 @@ const ModalAddComp = ({ visible, onClose }) => {
     segment: "",
     monthValidity: "01",
   });
+
+  useEffect(() => {
+    if (companyData && companyData.id_company) {
+      setFormData({
+        compCond: companyData.cd_comp_or_cond === 1 ? "E" : "C",
+        fantasyName: companyData.nm_comp_name || "",
+        cnpj: companyData.cd_cnpj || "",
+        segment: companyData.cd_id_segment?.toString() || "",
+        monthValidity: companyData.ds_month_validity || "01",
+      });
+    }
+  }, [companyData]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,23 +49,22 @@ const ModalAddComp = ({ visible, onClose }) => {
       return;
     }
 
-    if(!formData.segment || !formData.fantasyName || !formData.cnpj){
-      toast.warn("Preencha todos os campos!", {autoClose: 800})
-      return
-    }
-    else if(formData.cnpj.length < 18){
-      toast.warn("Preencha o CNPJ corretamente!", {autoClose: 800})
-      return
+    if (!formData.segment || !formData.fantasyName || !formData.cnpj) {
+      toast.warn("Preencha todos os campos!", { autoClose: 800 });
+      return;
+    } else if (formData.cnpj.length < 18) {
+      toast.warn("Preencha o CNPJ corretamente!", { autoClose: 800 });
+      return;
     }
 
-    const companyData = { ...formData, userId: user?.id_user };
-
-    await newCompany(companyData);
+    const updatedData = { ...formData, userId: user?.id_user };
+    await updateCompany(companyData.id_company, updatedData);
+    onClose();
   };
 
   return (
     <Modal
-      title="Incluir Empresa"
+      title="Editar Empresa"
       centered
       open={visible}
       onOk={handleSubmit}
@@ -91,7 +103,7 @@ const ModalAddComp = ({ visible, onClose }) => {
             name="cnpj"
             value={formData.cnpj}
             onChange={handleCNPJChange}
-            max={14}
+            maxLength={18}
           />
         </InputBox>
 
@@ -125,4 +137,4 @@ const ModalAddComp = ({ visible, onClose }) => {
   );
 };
 
-export default ModalAddComp;
+export default ModalEditComp;
