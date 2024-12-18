@@ -50,3 +50,31 @@ export const updateCompany = async (companyId, companyData) => {
     toast.error(error.response?.data?.error || "Erro ao editar empresa.");
   }
 };
+
+export const deleteCompany = async (companyId) => {
+  try {
+    const response = await api.delete(`${API_URL}/companies?id_company=${companyId}`);
+
+    if (response.status === 200) {
+      toast.success(response.data.message, { autoClose: 900 });
+      return true;
+    } else {
+      toast.error(response.data.error || "Erro ao deletar empresa.");
+      return false;
+    }
+  } catch (error) {
+    console.error("Erro ao deletar empresa:", error);
+    toast.error(error.response?.data?.error || "Erro ao deletar empresa.");
+    return false;
+  }
+};
+
+export const fetchCompanies = async (month, setCompanies) => {
+  try {
+    const response = await api.get(`${API_URL}/comp-month/${month}`);
+    setCompanies(response.data);
+  } catch (error) {
+    console.error("Erro ao buscar empresas:", error);
+    toast.error("Erro ao buscar empresas")
+  }
+};

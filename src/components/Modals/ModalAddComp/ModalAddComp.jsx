@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal } from "antd";
 import SegmentList from "../../Responses/SegmentList";
+import CityList from "../../Responses/CityList";
 import { Form, InputBox, Label, Input } from "./style";
 import { useAuth } from "../../AuthContext";
 import { toast } from "react-toastify";
@@ -13,6 +14,7 @@ const ModalAddComp = ({ visible, onClose }) => {
     fantasyName: "",
     cnpj: "",
     segment: "",
+    city: "",
     monthValidity: "01",
   });
 
@@ -31,12 +33,21 @@ const ModalAddComp = ({ visible, onClose }) => {
   };
 
   const handleSubmit = async () => {
+    setFormData({
+      compCond: "E",
+      fantasyName: "",
+      cnpj: "",
+      segment: "",
+      city: "",
+      monthValidity: "01",
+    });
+
     if (!user?.id_user) {
       toast.error("Usuário não autenticado.");
       return;
     }
 
-    if(!formData.segment || !formData.fantasyName || !formData.cnpj){
+    if(!formData.segment || !formData.city || !formData.fantasyName || !formData.cnpj){
       toast.warn("Preencha todos os campos!", {autoClose: 800})
       return
     }
@@ -48,6 +59,8 @@ const ModalAddComp = ({ visible, onClose }) => {
     const companyData = { ...formData, userId: user?.id_user };
 
     await newCompany(companyData);
+
+    onClose();
   };
 
   return (
@@ -101,6 +114,16 @@ const ModalAddComp = ({ visible, onClose }) => {
             value={formData.segment}
             onChange={(value) =>
               setFormData((prev) => ({ ...prev, segment: value }))
+            }
+          />
+        </InputBox>
+
+        <InputBox>
+          <Label htmlFor="city">Cidade:</Label>
+          <CityList
+            value={formData.city}
+            onChange={(value) =>
+              setFormData((prev) => ({ ...prev, city: value }))
             }
           />
         </InputBox>

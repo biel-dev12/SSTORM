@@ -17,7 +17,7 @@ const AppRoutes = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/docs/pgr-pcmso" element={<ProtectedRoute>
+            <Route path="/pgr-pcmso" element={<ProtectedRoute>
                   <PgrPcmso />
                 </ProtectedRoute>} />
             <Route

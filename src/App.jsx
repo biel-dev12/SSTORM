@@ -72,7 +72,7 @@ const App = () => {
             className="item"
           >
             <MenuEl.Item key="2.1">
-              <Link to="/docs/pgr-pcmso">PGR / PCMSO</Link>
+              <Link to="/pgr-pcmso">PGR / PCMSO</Link>
             </MenuEl.Item>
             <MenuEl.Item key="2.2">
               <Link to="/docs/ltcat">LTCAT</Link>

@@ -20,7 +20,7 @@ import {
   TextStatus,
   CheckIcon,
   PendingIcon,
-  CompanyDisplay
+  CompanyDisplay,
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
 import { IoArrowUndo } from "react-icons/io5";
@@ -30,7 +30,6 @@ import ModalEditComp from "../../components/Modals/ModalEditComp/ModalEditComp";
 import ModalDelComp from "../../components/Modals/ModalDelComp/ModalDelComp";
 import { getCompany } from "../../api/companyService";
 import { toast } from "react-toastify";
-
 
 const Home = () => {
   const [modal1Visible, setModal1Visible] = useState(false);
@@ -43,15 +42,14 @@ const Home = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-  
+
     if (!searchQuery.trim()) {
       toast.warn("Por favor, insira um valor de busca.", { autoClose: 700 });
       return;
     }
-  
-   await getCompany(searchType, searchQuery, setSelectedCompany);
+
+    await getCompany(searchType, searchQuery, setSelectedCompany);
   };
-  
 
   const handleCnpjMask = (value) => {
     const cnpj = value.replace(/\D/g, "").slice(0, 14);
@@ -81,7 +79,11 @@ const Home = () => {
       <Main>
         {selectedCompany && (
           <CompanyDisplay>
-            <IoArrowUndo className="icon" onClick={() => setSelectedCompany(null)}/> Empresa atual: <span>{selectedCompany.nm_comp_name}</span>
+            <IoArrowUndo
+              className="icon"
+              onClick={() => setSelectedCompany(null)}
+            />{" "}
+            Empresa atual: <span>{selectedCompany.nm_comp_name}</span>
           </CompanyDisplay>
         )}
 
@@ -162,7 +164,9 @@ const Home = () => {
               if (selectedCompany) {
                 setModal2Visible(true);
               } else {
-                toast.warn("Selecione uma empresa para editar.", { autoClose: 1000 });
+                toast.warn("Selecione uma empresa para editar.", {
+                  autoClose: 1000,
+                });
               }
             }}
           >
@@ -177,7 +181,9 @@ const Home = () => {
               if (selectedCompany) {
                 setModal3Visible(true);
               } else {
-                toast.warn("Selecione uma empresa para excluir.", { autoClose: 1000 });
+                toast.warn("Selecione uma empresa para excluir.", {
+                  autoClose: 1000,
+                });
               }
             }}
           >
@@ -286,11 +292,13 @@ const Home = () => {
           visible={modal2Visible}
           onClose={() => setModal2Visible(false)}
           companyData={selectedCompany}
+          exitCompany={setSelectedCompany}
         />
         <ModalDelComp
           visible={modal3Visible}
           onClose={() => setModal3Visible(false)}
           companyData={selectedCompany}
+          exitCompany={setSelectedCompany}
         />
       </Main>
     </>

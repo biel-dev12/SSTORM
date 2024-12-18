@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import { Modal } from "antd";
 import SegmentList from "../../Responses/SegmentList";
+import CityList from "../../Responses/CityList";
 import { Form, InputBox, Label, Input } from "./style";
 import { useAuth } from "../../AuthContext";
 import { toast } from "react-toastify";
 import { updateCompany } from "../../../api/companyService";
 
-const ModalEditComp = ({ visible, onClose, companyData }) => {
+const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     compCond: "E",
     fantasyName: "",
-    cnpj: "",
+    city: "",
     segment: "",
     monthValidity: "01",
   });
@@ -27,7 +28,6 @@ const ModalEditComp = ({ visible, onClose, companyData }) => {
       });
     }
   }, [companyData]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +44,15 @@ const ModalEditComp = ({ visible, onClose, companyData }) => {
   };
 
   const handleSubmit = async () => {
+    setFormData({
+      compCond: "E",
+      fantasyName: "",
+      cnpj: "",
+      segment: "",
+      city: "",
+      monthValidity: "01",
+    });
+
     if (!user?.id_user) {
       toast.error("Usuário não autenticado.");
       return;
@@ -59,6 +68,8 @@ const ModalEditComp = ({ visible, onClose, companyData }) => {
 
     const updatedData = { ...formData, userId: user?.id_user };
     await updateCompany(companyData.id_company, updatedData);
+
+    exitCompany(null);
     onClose();
   };
 
@@ -113,6 +124,16 @@ const ModalEditComp = ({ visible, onClose, companyData }) => {
             value={formData.segment}
             onChange={(value) =>
               setFormData((prev) => ({ ...prev, segment: value }))
+            }
+          />
+        </InputBox>
+
+        <InputBox>
+          <Label htmlFor="city">Cidade:</Label>
+          <CityList
+            value={formData.city}
+            onChange={(value) =>
+              setFormData((prev) => ({ ...prev, city: value }))
             }
           />
         </InputBox>
