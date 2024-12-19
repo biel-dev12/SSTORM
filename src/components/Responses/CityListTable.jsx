@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import { fetchCities } from "../../api/cityService";
 import { toast } from "react-toastify";
+import styled from "styled-components";
 
+const StyledSelect = styled.select`
+  width: auto;
+  padding: 0; 
+  font-size: 0.6rem;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+`;
 
 const CityList = ({ value, onChange }) => {
   const [cities, setCities] = useState([]);
@@ -23,7 +33,7 @@ const CityList = ({ value, onChange }) => {
   }, []);
 
   return (
-    <select
+    <StyledSelect
       name="city"
       id="city"
       value={value}
@@ -44,7 +54,7 @@ const CityList = ({ value, onChange }) => {
       ) : (
         <option value="no-cities">Cidades não encontradas</option>
       )}
-    </select>
+    </StyledSelect>
   );
 };
 
