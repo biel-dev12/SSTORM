@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const StyledSelect = styled.select`
   width: auto;
-  padding: 0; 
+  padding: 0;
   font-size: 0.6rem;
   text-align: center;
   background-color: transparent;
@@ -34,20 +34,14 @@ const CityList = ({ value, onChange }) => {
 
   return (
     <StyledSelect
-      name="city"
-      id="city"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange(e.target.value)} // Atualiza o valor quando uma cidade é selecionada
     >
-      
       {loading ? (
         <option value="loading">Carregando...</option>
       ) : cities.length > 0 ? (
         cities.map((city) => (
-          <option
-            key={city.id_city}
-            value={city.id_city}
-          >
+          <option key={city.id_city} value={city.id_city}>
             {city.sg_city}
           </option>
         ))

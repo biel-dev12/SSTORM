@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchCompanies, updateCompany } from "../../api/companyService";
+import { fetchCompanies, updateSingleAttribute } from "../../api/companyService";
 import { format, parse } from "date-fns"; 
-import CityList from "../Responses/CityListTable"; 
 import {
   TableContainer,
   Table,
@@ -34,15 +33,17 @@ function CompanyTable({ month }) {
 
   const handleBlur = async () => {
     const { companyId, field, value } = editingCell;
-    // await updateCompany(companyId, { [field]: value });
-    console.log(editingCell)
+    console.log("Atualizando", companyId, field, value);  // Log para verificar os valores
+  
+    await updateSingleAttribute(companyId, field, value);
+  
     setCompanies((prev) =>
       prev.map((c) =>
         c.id_company === companyId ? { ...c, [field]: value } : c
       )
     );
     setEditingCell({ companyId: null, field: null, value: "" });
-  };
+  };  
 
   const renderEditableCell = (company, field, className) => {
     const isEditing =
@@ -72,12 +73,7 @@ function CompanyTable({ month }) {
           field === "cd_cnpj" ? (
             <span>{company[field]}</span>
           ) : field === "sg_city" ? (
-            <CityList
-              value={editingCell.value}
-              onChange={(value) =>
-                setEditingCell((prev) => ({ ...prev, value }))
-              }
-            />
+            <span>{company[field]}</span>
           ) : field.includes("dt") || field === "lc" ? (
             <TableInput
               type="date"
@@ -99,6 +95,8 @@ function CompanyTable({ month }) {
           <span>{company[field]}</span>
         ) : field === "sg_city" ? (
           company[field]
+        ) : field === "nm_neighborhood" ? (
+          <span>{company[field]}</span>
         ) : field.includes("dt") || field === "lc" ? (
           formatDate(company[field])
         ) : (

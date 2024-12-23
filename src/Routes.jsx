@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import PgrPcmso from "./pages/PgrPcmso/PgrPcmso.jsx";
+import Teste from "./pages/Teste.jsx"
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
           <Route element={<App />}>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/teste" element={<Teste />} />
 
             <Route path="/pgr-pcmso" element={<ProtectedRoute>
                   <PgrPcmso />

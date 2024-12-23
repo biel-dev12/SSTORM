@@ -80,15 +80,16 @@ export const TableInput = styled.input`
   width: 100%;
   border: none;
   outline: none;
-  text-align: center;
+  text-align: left;
   background-color: transparent;
+  font-size: 0.75rem;
 
   ${({ field }) => {
     const widths = {
       sg_city: "2rem",
       nm_comp_or_cond: "1rem",
       nm_neighborhood: "100px",
-      nm_comp_name: "200px",
+      // nm_comp_name: "200px",
       cd_cnpj: "6.8rem",
       dt_contele: "120px",
       resp_contele: "100px",
