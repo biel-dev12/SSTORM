@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import { useState, useEffect } from "react";
 import { ConfirmDel } from "./style";
 import { toast } from "react-toastify";
-import { deleteCompany } from "../../../api/companyService";
+import { deleteCompany } from "../../../../api/companyService";
 
 const ModalDelComp = ({ visible, onClose, companyData, exitCompany }) => {
   const [titleModal, setTitleModal] = useState("Excluir Empresa");

@@ -25,9 +25,9 @@ import {
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
 import { IoArrowUndo } from "react-icons/io5";
 import { Dropdown } from "antd";
-import ModalAddComp from "../../components/Modals/ModalAddComp/ModalAddComp";
-import ModalEditComp from "../../components/Modals/ModalEditComp/ModalEditComp";
-import ModalDelComp from "../../components/Modals/ModalDelComp/ModalDelComp";
+import ModalAddComp from "../../components/Modals/Home/ModalAddComp/ModalAddComp";
+import ModalEditComp from "../../components/Modals/Home/ModalEditComp/ModalEditComp";
+import ModalDelComp from "../../components/Modals/Home/ModalDelComp/ModalDelComp";
 import { getCompany } from "../../api/companyService";
 import { toast } from "react-toastify";
 

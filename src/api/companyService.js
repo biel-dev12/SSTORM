@@ -51,33 +51,6 @@ export const updateCompany = async (companyId, companyData) => {
   }
 };
 
-export const updateSingleAttribute = async (id, field, value) => {
-  try {
-    const response = await api.put(`${API_URL}/upt-comp/${id}`, { field, value });
-
-    console.log("Resposta da API:", response);
-
-    if (response.status === 200) {
-      toast.success("Campo atualizado com sucesso!", { autoClose: 700 });
-    } else {
-      toast.warn("Atualização realizada, mas com mensagens inesperadas.", { autoClose: 700 });
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Erro ao atualizar campo:", error);
-    toast.error(
-      error.response?.data?.message || "Erro ao atualizar o campo. Verifique os dados e tente novamente.",
-      { autoClose: 900 }
-    );
-    throw error;
-  }
-};
-
-
-
-
-
 export const deleteCompany = async (companyId) => {
   try {
     const response = await api.delete(`${API_URL}/companies?id_company=${companyId}`);

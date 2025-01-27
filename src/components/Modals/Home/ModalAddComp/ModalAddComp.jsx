@@ -1,33 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal } from "antd";
-import SegmentList from "../../Responses/SegmentList";
-import CityList from "../../Responses/CityList";
+import SegmentList from "../../../Responses/SegmentList";
+import CityList from "../../../Responses/CityList";
 import { Form, InputBox, Label, Input } from "./style";
-import { useAuth } from "../../AuthContext";
+import { useAuth } from "../../../AuthContext";
 import { toast } from "react-toastify";
-import { updateCompany } from "../../../api/companyService";
+import { newCompany } from "../../../../api/companyService.js";
 
-const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
+const ModalAddComp = ({ visible, onClose }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     compCond: "E",
     fantasyName: "",
-    city: "",
+    neighborhood: "",
+    cnpj: "",
     segment: "",
+    city: "",
     monthValidity: "01",
   });
-
-  useEffect(() => {
-    if (companyData && companyData.id_company) {
-      setFormData({
-        compCond: companyData.cd_comp_or_cond === 1 ? "E" : "C",
-        fantasyName: companyData.nm_comp_name || "",
-        cnpj: companyData.cd_cnpj || "",
-        segment: companyData.cd_id_segment?.toString() || "",
-        monthValidity: companyData.ds_month_validity || "01",
-      });
-    }
-  }, [companyData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +37,7 @@ const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
     setFormData({
       compCond: "E",
       fantasyName: "",
+      neighborhood: "",
       cnpj: "",
       segment: "",
       city: "",
@@ -58,24 +49,25 @@ const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
       return;
     }
 
-    if (!formData.segment || !formData.fantasyName || !formData.cnpj) {
-      toast.warn("Preencha todos os campos!", { autoClose: 800 });
-      return;
-    } else if (formData.cnpj.length < 18) {
-      toast.warn("Preencha o CNPJ corretamente!", { autoClose: 800 });
-      return;
+    if(!formData.segment || !formData.city || !formData.fantasyName || !formData.cnpj){
+      toast.warn("Preencha todos os campos!", {autoClose: 800})
+      return
+    }
+    else if(formData.cnpj.length < 18){
+      toast.warn("Preencha o CNPJ corretamente!", {autoClose: 800})
+      return
     }
 
-    const updatedData = { ...formData, userId: user?.id_user };
-    await updateCompany(companyData.id_company, updatedData);
+    const companyData = { ...formData, userId: user?.id_user };
 
-    exitCompany(null);
+    await newCompany(companyData);
+
     onClose();
   };
 
   return (
     <Modal
-      title="Editar Empresa"
+      title="Incluir Empresa"
       centered
       open={visible}
       onOk={handleSubmit}
@@ -107,6 +99,17 @@ const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
         </InputBox>
 
         <InputBox>
+          <Label htmlFor="neighborhood">Bairro:</Label>
+          <Input
+            type="text"
+            id="neighborhood"
+            name="neighborhood"
+            value={formData.neighborhood}
+            onChange={handleChange}
+          />
+        </InputBox>
+
+        <InputBox>
           <Label htmlFor="cnpj">CNPJ:</Label>
           <Input
             type="text"
@@ -114,7 +117,7 @@ const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
             name="cnpj"
             value={formData.cnpj}
             onChange={handleCNPJChange}
-            maxLength={18}
+            max={14}
           />
         </InputBox>
 
@@ -158,4 +161,4 @@ const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
   );
 };
 
-export default ModalEditComp;
+export default ModalAddComp;

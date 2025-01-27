@@ -1,4 +1,4 @@
-import { theme } from "../../../Theme";
+import { theme } from "../../../../Theme";
 import styled from "styled-components";
 
 export const ConfirmDel = styled.div`
