@@ -30,7 +30,7 @@ export const Input = styled.input`
     border: 1px solid;
     padding: 2px 5px;
 
-    &#cnpj{
-        width: 30%;
+    &.inp_date{
+        width: 25%;
     }
 `

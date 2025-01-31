@@ -1,157 +1,156 @@
 import { useState, useEffect } from "react";
 import { Modal } from "antd";
-import SegmentList from "../../../Responses/SegmentList";
-import CityList from "../../../Responses/CityList";
 import { Form, InputBox, Label, Input } from "./style";
-import { useAuth } from "../../../AuthContext";
 import { toast } from "react-toastify";
-import { updateCompany } from "../../../../api/companyService";
+import { updatePgr } from "../../../../api/pgrService"; // Atualizado para chamar o serviço correto
+import TypeServiceList from "../../../Responses/TypeServiceList";
+import TechList from "../../../Responses/TechList";
 
-const ModalEditComp = ({ visible, onClose, companyData, exitCompany }) => {
-  const { user } = useAuth();
+const ModalEditComp = ({ visible, onClose}) => {
   const [formData, setFormData] = useState({
-    compCond: "E",
-    fantasyName: "",
-    city: "",
-    segment: "",
-    monthValidity: "01",
+    ds_type_inspection: "",
+    dt_release: "",
+    ds_type_service: "",
+    dt_contele: "",
+    cd_id_contele_tec: "",
+    dt_basic_doc: "",
+    cd_id_bas_doc_tec: "",
+    dt_inspection: "",
+    cd_id_insp_tec: "",
+    dt_definitive_doc: "",
+    cd_id_def_doc_tec: "",
+    dt_submission_doc: "",
+    cd_id_sub_tec: "",
+    ds_obs: "",
+    cd_id_company_doc: "",
   });
 
+  // Preenche os dados ao abrir o modal
   useEffect(() => {
-    if (companyData && companyData.id_company) {
+    if (visible) {
       setFormData({
-        compCond: companyData.cd_comp_or_cond === 1 ? "E" : "C",
-        fantasyName: companyData.nm_comp_name || "",
-        cnpj: companyData.cd_cnpj || "",
-        segment: companyData.cd_id_segment?.toString() || "",
-        monthValidity: companyData.ds_month_validity || "01",
+        ds_type_inspection: "",
+        dt_release: "",
+        ds_type_service: "",
+        dt_contele: "",
+        cd_id_contele_tec: "",
+        dt_basic_doc: "",
+        cd_id_bas_doc_tec: "",
+        dt_inspection: "",
+        cd_id_insp_tec: "",
+        dt_definitive_doc: "",
+        cd_id_def_doc_tec: "",
+        dt_submission_doc: "",
+        cd_id_sub_tec: "",
+        ds_obs: "",
+        cd_id_company_doc: "", // Agora inicializado corretamente
       });
     }
-  }, [companyData]);
+  }, [visible]);
+  
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  // Atualiza os valores do formulário
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleCNPJChange = (e) => {
-    let cnpj = e.target.value.replace(/\D/g, "").slice(0, 14);
-    cnpj = cnpj.replace(/^(\d{2})(\d)/, "$1.$2");
-    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
-    cnpj = cnpj.replace(/\.(\d{3})(\d)/, ".$1/$2");
-    cnpj = cnpj.replace(/(\d{4})(\d)/, "$1-$2");
-    setFormData((prev) => ({ ...prev, cnpj }));
-  };
-
+  // Envia os dados atualizados
   const handleSubmit = async () => {
-    setFormData({
-      compCond: "E",
-      fantasyName: "",
-      cnpj: "",
-      segment: "",
-      city: "",
-      monthValidity: "01",
-    });
-
-    if (!user?.id_user) {
-      toast.error("Usuário não autenticado.");
-      return;
-    }
-
-    if (!formData.segment || !formData.fantasyName || !formData.cnpj) {
-      toast.warn("Preencha todos os campos!", { autoClose: 800 });
-      return;
-    } else if (formData.cnpj.length < 18) {
-      toast.warn("Preencha o CNPJ corretamente!", { autoClose: 800 });
-      return;
-    }
-
-    const updatedData = { ...formData, userId: user?.id_user };
-    await updateCompany(companyData.id_company, updatedData);
-
-    exitCompany(null);
+    try {
+      if (!formData.cd_id_company_doc) {
+        toast.error("Empresa não identificada!");
+        return;
+      }
+  
+      await updatePgr(formData.cd_id_company_doc, cd_id_company_doc, formData);
+  
+      toast.success("Empresa atualizada com sucesso!");
     onClose();
-  };
+  } catch (error) {
+    console.error("Erro ao atualizar PGR:", error);
+    toast.error("Erro ao atualizar PGR. Verifique os dados e tente novamente.");
+  }
+};
 
   return (
     <Modal
-      title="Editar Empresa"
+      title="Editar Informações da Empresa"
       centered
       open={visible}
       onOk={handleSubmit}
       onCancel={onClose}
+      okText="Salvar"
+      cancelText="Cancelar"
     >
       <Form>
         <InputBox>
-          <Label htmlFor="compCond">Empresa ou Condomínio?</Label>
+          <Label htmlFor="type_inspection">Tipo de Inspeção:</Label>
           <select
-            name="compCond"
-            id="compCond"
-            value={formData.compCond}
-            onChange={handleChange}
+            name="ds_type_inspection"
+            id="type_inspection"
+            value={formData.ds_type_inspection}
+            onChange={(e) => handleChange("ds_type_inspection", e.target.value)}
           >
-            <option value="E">Empresa</option>
-            <option value="C">Condomínio</option>
+            <option value="" disabled>
+              Selecione um tipo
+            </option>
+            <option value="In">In</option>
+            <option value="Tele">Tele</option>
           </select>
         </InputBox>
 
         <InputBox>
-          <Label htmlFor="fantasyName">Razão Social:</Label>
+          <Label htmlFor="dt_release">Liberação Comercial:</Label>
+          <Input
+            type="date"
+            id="dt_release"
+            name="dt_release"
+            className="inp_date"
+            value={formData.dt_release}
+            onChange={(e) => handleChange("dt_release", e.target.value)}
+          />
+        </InputBox>
+
+        <InputBox>
+          <Label htmlFor="ds_type_service">Tipo de Serviço:</Label>
+          <TypeServiceList
+            value={formData.ds_type_service}
+            onChange={(value) => handleChange("ds_type_service", value)}
+          />
+        </InputBox>
+
+        {/* Campos combinados: Data e Técnico Responsável */}
+        {[
+          { label: "Contele Alimentado", dtField: "dt_contele", tecField: "cd_id_contele_tec" },
+          { label: "SOC+DOC Básico", dtField: "dt_basic_doc", tecField: "cd_id_bas_doc_tec" },
+          { label: "Inspeção Técnica", dtField: "dt_inspection", tecField: "cd_id_insp_tec" },
+          { label: "SOC+DOC Definitivo", dtField: "dt_definitive_doc", tecField: "cd_id_def_doc_tec" },
+          { label: "Assinatura e Envio", dtField: "dt_submission_doc", tecField: "cd_id_sub_tec" },
+        ].map(({ label, dtField, tecField }) => (
+          <InputBox key={dtField}>
+            <Label>{label}:</Label>
+            <Input
+              type="date"
+              value={formData[dtField]}
+              className="inp_date"
+              onChange={(e) => handleChange(dtField, e.target.value)}
+            />
+            <TechList
+              value={formData[tecField]}
+              onChange={(value) => handleChange(tecField, value)}
+            />
+          </InputBox>
+        ))}
+
+        <InputBox>
+          <Label htmlFor="ds_obs">Observações:</Label>
           <Input
             type="text"
-            id="fantasyName"
-            name="fantasyName"
-            value={formData.fantasyName}
-            onChange={handleChange}
+            id="ds_obs"
+            name="ds_obs"
+            value={formData.ds_obs}
+            onChange={(e) => handleChange("ds_obs", e.target.value)}
           />
-        </InputBox>
-
-        <InputBox>
-          <Label htmlFor="cnpj">CNPJ:</Label>
-          <Input
-            type="text"
-            id="cnpj"
-            name="cnpj"
-            value={formData.cnpj}
-            onChange={handleCNPJChange}
-            maxLength={18}
-          />
-        </InputBox>
-
-        <InputBox>
-          <Label htmlFor="segment">Segmento:</Label>
-          <SegmentList
-            value={formData.segment}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, segment: value }))
-            }
-          />
-        </InputBox>
-
-        <InputBox>
-          <Label htmlFor="city">Cidade:</Label>
-          <CityList
-            value={formData.city}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, city: value }))
-            }
-          />
-        </InputBox>
-
-        <InputBox>
-          <Label htmlFor="monthValidity">Mês de vigência (PGR):</Label>
-          <select
-            name="monthValidity"
-            id="monthValidity"
-            value={formData.monthValidity}
-            onChange={handleChange}
-          >
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i + 1} value={(i + 1).toString().padStart(2, "0")}>
-                {new Date(0, i).toLocaleString("pt-BR", { month: "short" })}
-              </option>
-            ))}
-          </select>
         </InputBox>
       </Form>
     </Modal>

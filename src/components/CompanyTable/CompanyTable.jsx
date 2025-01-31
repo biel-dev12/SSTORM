@@ -39,33 +39,29 @@ function CompanyTable({ month }) {
     }
   };
 
-  const openEditModal = (company) => {
+  const openEditModalPgr = (company) => {
     setSelectedCompany({
-      nm_comp_name: company.nm_comp_name || "",
-      nm_neighborhood: company.nm_neighborhood || "",
-      cd_comp_or_cond: company.cd_comp_or_cond || "",
-      sg_city: company.sg_city || "",
-      cd_cnpj: company.cd_cnpj || "",
-      cd_id_segment: 2,
-      ti: company.ti || "",
-      lc: company.lc || "",
-      fi: company.fi || "",
-      dt_contele: company.dt_contele || "",
-      resp_contele: company.resp_contele || "",
-      dt_basic: company.dt_basic || "",
-      resp_basic: company.resp_basic || "",
-      dt_insp: company.dt_insp || "",
-      resp_insp: company.resp_insp || "",
-      dt_doc_def: company.dt_doc_def || "",
-      resp_doc_def: company.resp_doc_def || "",
-      dt_env: company.dt_env || "",
-      resp_env: company.resp_env || "",
-      tr: company.tr || "",
-      observacoes: company.observacoes || "",
       id_company: company.id_company,
+      cd_id_company_doc: company.id_company,
+      ds_type_inspection: company.ds_type_inspection || "",
+      dt_release: company.dt_release || "",
+      ds_type_service: company.ds_type_service || "",
+      dt_contele: company.dt_contele || "",
+      cd_id_contele_tec: company.cd_id_contele_tec || "",
+      dt_basic_doc: company.dt_basic_doc || "",
+      cd_id_bas_doc_tec: company.cd_id_bas_doc_tec || "",
+      dt_inspection: company.dt_inspection || "",
+      cd_id_insp_tec: company.cd_id_insp_tec || "",
+      dt_definitive_doc: company.dt_definitive_doc || "",
+      cd_id_def_doc_tec: company.cd_id_def_doc_tec || "",
+      dt_submission_doc: company.dt_submission_doc || "",
+      cd_id_sub_tec: company.cd_id_sub_tec || "",
+      ds_obs: company.ds_obs || "",
     });
-    setModalVisible(true);
+  
+    setModal2Visible(true);
   };
+  
 
   const closeEditModal = () => {
     setModalVisible(false);
@@ -111,7 +107,8 @@ function CompanyTable({ month }) {
         {field === "cd_cnpj" ||
         field === "sg_city" ||
         field === "nm_neighborhood" ||
-        field === "nm_comp_or_cond" || field === "cd_id_segment" ? (
+        field === "nm_comp_or_cond" ||
+        field === "cd_id_segment" ? (
           <span>{company[field]}</span>
         ) : field.includes("dt") || field === "lc" ? (
           formatDate(company[field])
@@ -201,7 +198,7 @@ function CompanyTable({ month }) {
                   <EditIcon
                     size={18}
                     cursor="pointer"
-                    onClick={() => setModal2Visible(true)}
+                    onClick={() => openEditModalPgr(company)}
                   />
                 </TableCell>
                 {renderCell(company, "sg_city")}
@@ -225,6 +222,14 @@ function CompanyTable({ month }) {
                 {renderCell(company, "resp_env", "env")}
                 {renderCell(company, "tr")}
                 {renderCell(company, "observacoes")}
+
+                {modal2Visible &&
+                  selectedCompany?.id_company === company.id_company && (
+                    <ModalEditComp
+                      visible={modal2Visible}
+                      onClose={() => setModal2Visible(false)}
+                    />
+                  )}
               </TableRow>
             ))}
           </TableBody>
@@ -271,13 +276,6 @@ function CompanyTable({ month }) {
           </ModalFooter>
         </Modal>
       )}
-
-      <ModalEditComp
-        visible={modal2Visible}
-        onClose={() => setModal2Visible(false)}
-        companyData={selectedCompany}
-        exitCompany={setSelectedCompany}
-      />
     </>
   );
 }
