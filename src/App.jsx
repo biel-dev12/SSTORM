@@ -2,6 +2,7 @@ import { useAuth } from "./components/AuthContext.jsx";
 import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
+import { RiMailSendFill } from "react-icons/ri";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -81,6 +82,10 @@ const App = () => {
 
           <MenuEl.Item key="3" icon={<TbDatabaseSearch />}>
             <Link to="/settings">Banco de Cargos</Link>
+          </MenuEl.Item>
+
+          <MenuEl.Item key="4" icon={<RiMailSendFill />}>
+            <Link to="/send-email">Enviar E-mail</Link>
           </MenuEl.Item>
 
           {!collapsed && (

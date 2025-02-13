@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import PgrPcmso from "./pages/PgrPcmso/PgrPcmso.jsx";
+import SendEmail from "./pages/SendEmail/SendEmail.jsx";
 
 const AppRoutes = () => {
   return (
@@ -25,6 +26,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <Home />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/send-email"
+              element={
+                <ProtectedRoute>
+                  <SendEmail />
                 </ProtectedRoute>
               }
             />
