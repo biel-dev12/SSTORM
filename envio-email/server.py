@@ -1,57 +1,36 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import win32com.client
-import pythoncom
+from email_service import enviar_email_outlook
 
 app = Flask(__name__)
-CORS(app)  # Permite requisições do React
+CORS(app)
 
-def enviar_email_outlook(destinatario, copia, assunto):
-    # Inicializa o COM, necessário para interação com o Outlook
-    pythoncom.CoInitialize()
-
-    # Inicializa o Outlook
-    outlook = win32com.client.Dispatch("Outlook.Application")
-    mensagem = outlook.CreateItem(0)  # Cria um novo e-mail
-
-    # Obtém a assinatura padrão do Outlook (já inserida automaticamente)
-    mensagem.Display()
-    assinatura = mensagem.HTMLBody  
-
-    # Define os detalhes do e-mail
-    mensagem.To = destinatario
-    mensagem.CC = copia
-    mensagem.Subject = assunto
-
-    # Corpo do e-mail com formatação HTML
-    corpo_email = f"""
-    <html>
-    <p style="color: orange; font-size: 18px; font-weight: bold;">E-mail com assinatura! Tudo automatizado.</p>
-    </html>
-    """
-
-    # Define o corpo do e-mail e mantém a assinatura padrão
-    mensagem.HTMLBody = corpo_email + assinatura
-
-    # Envia o e-mail
-    mensagem.Send()
+# Modelos de e-mail disponíveis
+EMAIL_MODELOS = {
+    "padrao": "<p style='color: orange; font-size: 18px; font-weight: bold;'>E-mail com assinatura! Tudo automatizado.</p>",
+    "boas_vindas": "<p>Bem-vindo(a) ao nosso serviço! Estamos felizes em tê-lo(a) conosco.</p>",
+    "aviso": "<p>Atenção! Há uma atualização importante que requer sua ação.</p>"
+}
 
 @app.route("/enviar-email", methods=["POST"])
 def enviar_email():
     try:
         dados = request.json
         destinatario = dados.get("destinatario")
-        copia = dados.get("copia")
+        copia = dados.get("copia", "").split(";") if dados.get("copia") else []
         assunto = dados.get("assunto")
+        modelo = dados.get("modelo", "padrao")  # Se não escolher, usa o modelo padrão
 
         if not destinatario or not assunto:
             return jsonify({"erro": "Campos obrigatórios faltando"}), 400
 
-        enviar_email_outlook(destinatario, copia, assunto)
+        corpo_email = EMAIL_MODELOS.get(modelo, EMAIL_MODELOS["padrao"])
+        enviar_email_outlook(destinatario, copia, assunto, corpo_email)
+
         return jsonify({"mensagem": "E-mail enviado com sucesso!"})
 
     except Exception as e:
-        print(f"Erro ao enviar e-mail: {str(e)}")  # Exibe o erro no terminal
+        print(f"Erro ao enviar e-mail: {str(e)}")
         return jsonify({"erro": str(e)}), 500
 
 if __name__ == "__main__":

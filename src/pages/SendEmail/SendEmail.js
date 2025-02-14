@@ -38,3 +38,17 @@ export const Button = styled.button`
     background-color: #45a049;
   }
 `;
+
+export const Select = styled.select`
+  margin-bottom: 10px;
+  padding: 8px;
+`;
+
+export const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  gap: 5px;
+`;
+
+export const Label = styled.label``;
