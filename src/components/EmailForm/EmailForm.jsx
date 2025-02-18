@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -7,20 +7,41 @@ import {
   Label,
   Box,
 } from "../../pages/SendEmail/SendEmail.js";
-
-const modelosEmail = [
-  { value: "padrao", label: "Padrão", assunto: "Email padrão" },
-  { value: "boas_vindas", label: "Boas-vindas", assunto: "Boas-vindas - " },
-  { value: "aviso", label: "Aviso", assunto: "Aviso para:" },
-];
+import axios from "axios";
 
 function EmailForm({ onSend }) {
   const [email, setEmail] = useState({
     destinatario: "",
     copia: "",
-    assunto: modelosEmail[0].assunto,
-    modelo: "padrao",
+    assunto: "",
+    modelo: "",
   });
+
+  const [modelosEmail, setModelosEmail] = useState([]);
+
+  // Buscar modelos do backend ao carregar a página
+  useEffect(() => {
+    async function fetchModelos() {
+      try {
+        const response = await axios.get("http://192.168.1.55:5000/email-templates");
+        const modelos = response.data;
+
+        setModelosEmail(modelos);
+        
+        // Definir o primeiro modelo como padrão
+        if (modelos.length > 0) {
+          setEmail((prev) => ({
+            ...prev,
+            modelo: modelos[0].value,
+            assunto: modelos[0].assunto || "",
+          }));
+        }
+      } catch (error) {
+        console.error("Erro ao buscar modelos de e-mail:", error);
+      }
+    }
+    fetchModelos();
+  }, []);
 
   const handleChange = (e) => {
     setEmail({ ...email, [e.target.name]: e.target.value });
@@ -30,10 +51,11 @@ function EmailForm({ onSend }) {
     const modeloSelecionado = modelosEmail.find(
       (m) => m.value === e.target.value
     );
+
     setEmail({
       ...email,
       modelo: modeloSelecionado.value,
-      assunto: modeloSelecionado.assunto,
+      assunto: modeloSelecionado.assunto || "",
     });
   };
 
