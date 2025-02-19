@@ -17,6 +17,15 @@ export const Form = styled.div`
   max-width: 400px;
 `;
 
+export const Models = styled.div`
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+`;
+
 export const Input = styled.input`
   width: 100%;
   margin-bottom: 10px;
@@ -52,3 +61,8 @@ export const Box = styled.div`
 `;
 
 export const Label = styled.label``;
+
+export const Title = styled.h1`
+  font-size: 1.5rem;
+  text-align: center;
+`;
