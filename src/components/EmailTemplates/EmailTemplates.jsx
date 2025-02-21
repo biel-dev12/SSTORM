@@ -44,7 +44,7 @@ function EmailTemplates({ onModeloSelecionado }) {
             <p>{departamento}</p>
           </AccordionSummary>
           <AccordionDetails>
-            {departamentos[departamento].map((modelo) => (
+            {Object.keys(departamentos[departamento]).map((modelo) => (
               <Button
                 key={modelo}
                 variant="outlined"
