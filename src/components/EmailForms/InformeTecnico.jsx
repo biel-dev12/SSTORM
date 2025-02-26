@@ -6,13 +6,19 @@ import {
   Label,
   Box,
   RemoveDest,
-  AddDest
+  AddDest,
+  Header
 } from "../../pages/SendEmail/SendEmail.js";
 
-function InformeTecnico({ modelo, onSend }) {
+import { MdOutlineArrowBack } from "react-icons/md";
+
+function InformeTecnico({ modelo, onSend, setModeloSelecionado }) {
   const [email, setEmail] = useState({
     destinatarios: [""],
-    copia: ["segurancanotrabalho@doctorspraiagrande.com.br", "ricardo@doctorspraiagrande.com.br"],
+    copia: [
+      "segurancanotrabalho@doctorspraiagrande.com.br",
+      "ricardo@doctorspraiagrande.com.br",
+    ],
     assunto: `Envio de Informe Técnico e Modelos de Ficha de EPI e OS - Ordem de Serviço`,
     modelo: modelo.nome,
     departamento: modelo.departamento,
@@ -31,24 +37,37 @@ function InformeTecnico({ modelo, onSend }) {
   };
 
   const removerDestinatario = (index) => {
-    const novosDestinatarios = email.destinatarios.filter((_, i) => i !== index);
+    const novosDestinatarios = email.destinatarios.filter(
+      (_, i) => i !== index
+    );
     setEmail({ ...email, destinatarios: novosDestinatarios });
   };
 
   return (
     <Form>
-      <h2>Enviar E-mail - Informe</h2>
+      <Header>
+        <MdOutlineArrowBack
+          size={24}
+          style={{ cursor: "pointer" }}
+          onClick={() => setModeloSelecionado(null)}
+        />
+        <h2>Enviar E-mail - Empresa não Atende</h2>
+      </Header>
 
       <Box>
         <Label>Destinatários:</Label>
         {email.destinatarios.map((dest, index) => (
-          <div className="dest" key={index} >
+          <div className="dest" key={index}>
             <Input
               type="email"
               value={dest}
               onChange={(e) => handleDestinatarioChange(index, e.target.value)}
             />
-            <RemoveDest type="button" onClick={() => removerDestinatario(index)} disabled={email.destinatarios.length === 1} />
+            <RemoveDest
+              type="button"
+              onClick={() => removerDestinatario(index)}
+              disabled={email.destinatarios.length === 1}
+            />
           </div>
         ))}
         {email.destinatarios.length < 10 && (
@@ -63,7 +82,9 @@ function InformeTecnico({ modelo, onSend }) {
           id="copia"
           name="copia"
           value={email.copia.join("; ")}
-          onChange={(e) => setEmail({ ...email, copia: e.target.value.split("; ") })}
+          onChange={(e) =>
+            setEmail({ ...email, copia: e.target.value.split("; ") })
+          }
           disabled
         />
       </Box>

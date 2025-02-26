@@ -10,14 +10,15 @@ import {
 
 import { MdOutlineArrowBack } from "react-icons/md";
 
-function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
+function EmpresaNaoAtende({ modelo, onSend, setModeloSelecionado}) {
   const [email, setEmail] = useState({
-    destinatarios: [""],
-    copia: [],
+    destinatarios: ["comercial@doctorspraiagrande.com.br"],
+    copia: ["segurancanotrabalho@doctorspraiagrande.com.br", "ricardo@doctorspraiagrande.com.br"],
     empresa: "",
-    assunto: `Agendamento de Inspeção na`,
+    assunto: `Situação da Empresa`,
     modelo: modelo.nome,
     departamento: modelo.departamento,
+    mes: "",
   });
 
   return (
@@ -30,7 +31,7 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
         />
         <h2>Enviar E-mail - Empresa não Atende</h2>
       </Header>
-
+      
       <Box>
         <Label htmlFor="empresa">Razão Social:</Label>
         <Input
@@ -40,10 +41,40 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
           value={email.empresa}
           onChange={(e) => {
             const novaEmpresa = e.target.value;
-            const novoAssunto = `Agendamento de Inspeção na ${novaEmpresa}`;
+            const novoAssunto = `Situação da Empresa ${novaEmpresa}`;
             setEmail({ ...email, empresa: novaEmpresa, assunto: novoAssunto });
           }}
         />
+      </Box>
+
+            <Box>
+        <Label htmlFor="mes">Mês:</Label>
+        <select
+          id="mes"
+          name="mes"
+          value={email.mes}
+          onChange={(e) => setEmail({ ...email, mes: e.target.value })}
+        >
+          <option value="">Selecione o mês</option>
+          {[
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro",
+          ].map((mes, index) => (
+            <option key={index} value={mes}>
+              {mes}
+            </option>
+          ))}
+        </select>
       </Box>
 
       <Box>
@@ -56,6 +87,7 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
           onChange={(e) =>
             setEmail({ ...email, destinatarios: e.target.value })
           }
+          disabled
         />
       </Box>
 
@@ -91,4 +123,4 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
   );
 }
 
-export default TentativaContato;
+export default EmpresaNaoAtende;

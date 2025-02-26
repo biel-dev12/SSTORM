@@ -58,7 +58,7 @@ function EmailTemplates({ onModeloSelecionado }) {
                 }
                 style={{ marginBottom: "5px" }}
               >
-                {modelo.replace("_", " ").toUpperCase()}
+                {modelo.replaceAll("_", " ").toUpperCase()}
               </Button>
             ))}
           </AccordionDetails>

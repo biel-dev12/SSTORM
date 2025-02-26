@@ -3,7 +3,6 @@ import { theme } from "../../Theme";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoMdAddCircle } from "react-icons/io";
 
-
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -19,7 +18,7 @@ export const Form = styled.div`
   border-radius: 8px;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
 `;
 
 export const Models = styled.div`
@@ -68,6 +67,14 @@ export const Box = styled.div`
     display: flex;
     align-items: center;
   }
+
+  & select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
 `;
 
 export const Label = styled.label``;
@@ -89,5 +96,12 @@ export const AddDest = styled(IoMdAddCircle)`
   margin: 0 0 10px 5px;
   cursor: pointer;
   color: ${theme.colors.green};
-  margin: 0 auto; 
+  margin: 0 auto;
+`;
+
+
+export const Header = styled.div`
+  display: flex; 
+  align-items: center;
+  gap: 10px;
 `;
