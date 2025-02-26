@@ -13,7 +13,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
   const [email, setEmail] = useState({
     destinatarios: [""],
-    copia: [],
+    copia: ["segurancanotrabalho@doctorspraiagrande.com.br", "ricardo@doctorspraiagrande.com.br"],
     empresa: "",
     assunto: `Agendamento de Inspeção na`,
     modelo: modelo.nome,
