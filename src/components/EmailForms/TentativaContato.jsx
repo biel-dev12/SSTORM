@@ -21,7 +21,7 @@ function TentativaContato({ modelo, onSend }) {
 
   return (
     <Form>
-      <h2>Enviar E-mail ({modelo.nome})</h2>
+      <h2>Enviar E-mail - Tentativa de Contato</h2>
 
       <Box>
         <Label htmlFor="empresa">Razão Social:</Label>

@@ -63,6 +63,8 @@ def enviar_email():
 
         corpo_email = corpo_email.replace("{saudacao}", definir_saudacao())
 
+        corpo_email = corpo_email.replace("{empresa}", empresa)
+
         # Enviar e-mail para cada destinatário separadamente
         if modelo == "informe_tecnico":
             for destinatario in destinatarios:

@@ -37,7 +37,7 @@ function InformeTecnico({ modelo, onSend }) {
 
   return (
     <Form>
-      <h2>Enviar E-mail ({modelo.nome})</h2>
+      <h2>Enviar E-mail - Informe Técnico</h2>
 
       <Box>
         <Label>Destinatários:</Label>
