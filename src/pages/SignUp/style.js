@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { theme } from "../../Theme.jsx";
-import imgBg from "../../assets/doctors-svg.svg";
+import imgBg from "../../../public/assets/doctors-svg.svg";
 
 export const Main = styled.main`
   font-family: Kadwa, sans-serif, Arial;

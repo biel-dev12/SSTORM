@@ -49,7 +49,7 @@ const App = () => {
       >
         <FavLogo>
           <div className="img-box">
-            <img src="./src/assets/doctors-fav.svg" alt="Logo" />
+            <img src="/assets/doctors-fav.svg" alt="Logo" />
           </div>
           {!collapsed && (
             <div className="username">{username}</div>
@@ -117,7 +117,7 @@ const App = () => {
           />
           <Logo>
             <div className="img-box">
-              <img src="./src/assets/logo-cropped.svg" alt="Logo" />
+              <img src="/assets/logo-cropped.svg" alt="Logo" />
             </div>
           </Logo>
         </HeaderEl>
