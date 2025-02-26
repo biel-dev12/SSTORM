@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from email_service import enviar_email_outlook
+import subprocess
 import os
 from datetime import datetime
 
@@ -62,7 +62,11 @@ def enviar_email():
 
         corpo_email = corpo_email.replace("{saudacao}", definir_saudacao())
 
-        enviar_email_outlook(destinatario, copia, assunto, corpo_email)
+        # Chama o executável de envio de e-mail
+        result = subprocess.run([r"C:\Users\Doctors\Desktop\SSTORM\email_service2.exe", destinatario, ";".join(copia), assunto, corpo_email], capture_output=True)
+        print(f"Comando executado: {result.args}")
+        print(f"Saída: {result.stdout.decode()}")
+        print(f"Erro: {result.stderr.decode()}")
 
         return jsonify({"mensagem": "E-mail enviado com sucesso!"})
 

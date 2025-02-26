@@ -1,7 +1,7 @@
 import win32com.client
 import pythoncom
 
-def enviar_email_outlook(destinatario, copia, assunto, corpo_email):
+def enviar_informe_tecnico(destinatario, copia, assunto, corpo_email):
     try:
         pythoncom.CoInitialize()  # Inicializa o COM
         # Cria o objeto do Outlook
@@ -9,14 +9,18 @@ def enviar_email_outlook(destinatario, copia, assunto, corpo_email):
         
         # Cria o item de e-mail
         mensagem = outlook.CreateItem(0)
-        
+
         # Exibe o e-mail para capturar a assinatura padrão
         mensagem.Display()
         assinatura = mensagem.HTMLBody  # Captura a assinatura padrão do Outlook
 
         # Define os campos do e-mail
         mensagem.To = destinatario
-        mensagem.CC = ";".join(copia) if copia else ""  # Permite múltiplos e-mails em cópia
+        if copia:
+            mensagem.CC = "; ".join([email.strip() for email in copia if email.strip()])
+        else:
+            mensagem.CC = ""
+
         mensagem.Subject = assunto
         mensagem.HTMLBody = corpo_email + assinatura  # Mantém a assinatura padrão
 
@@ -37,3 +41,32 @@ def enviar_email_outlook(destinatario, copia, assunto, corpo_email):
 
     except Exception as e:
         print(f"Erro ao enviar o e-mail: {e}")
+
+def enviar_tentativa_contato(destinatario, copia, assunto, corpo_email, empresa):
+    try:
+        pythoncom.CoInitialize()  # Inicializa o COM
+        # Cria o objeto do Outlook
+        outlook = win32com.client.Dispatch("Outlook.Application")
+        
+        # Cria o item de e-mail
+        mensagem = outlook.CreateItem(0)
+
+        # Exibe o e-mail para capturar a assinatura padrão
+        mensagem.Display()
+        assinatura = mensagem.HTMLBody  # Captura a assinatura padrão do Outlook
+
+        # Define os campos do e-mail
+        mensagem.To = destinatario
+        if copia:
+            mensagem.CC = "; ".join([email.strip() for email in copia if email.strip()])
+        else:
+            mensagem.CC = ""
+
+        mensagem.Subject = assunto
+        mensagem.HTMLBody = corpo_email + assinatura  # Mantém a assinatura padrão
+
+        # Envia o e-mail
+        mensagem.Send()
+
+    except Exception as e:
+        print(f"Erro ao enviar o e-mail: {e}")        

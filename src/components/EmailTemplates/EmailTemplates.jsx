@@ -6,6 +6,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { MdOutlineExpandMore } from "react-icons/md";
 import { Button } from "@mui/material";
+import { EMAIL_API } from "../../api/config.js";
 
 function EmailTemplates({ onModeloSelecionado }) {
   const [departamentos, setDepartamentos] = useState({});
@@ -14,7 +15,7 @@ function EmailTemplates({ onModeloSelecionado }) {
   useEffect(() => {
     async function fetchDepartamentos() {
       try {
-        const response = await axios.get("http://192.168.1.55:5000/email-templates");
+        const response = await axios.get(`${EMAIL_API}/email-templates`);
         setDepartamentos(response.data);
       } catch (error) {
         console.error("Erro ao buscar departamentos:", error);

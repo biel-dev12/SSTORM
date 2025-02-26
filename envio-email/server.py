@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from email_service import enviar_email_outlook
+from email_service import enviar_informe_tecnico, enviar_tentativa_contato
 import os
 from datetime import datetime
 
@@ -46,13 +46,14 @@ def definir_saudacao():
 def enviar_email():
     try:
         dados = request.json
-        destinatario = dados.get("destinatario")
-        copia = dados.get("copia", "").split(";") if dados.get("copia") else []
+        destinatarios = dados.get("destinatarios", [])  # Lista de destinatários
+        copia = dados.get("copia", [])
         assunto = dados.get("assunto")
         departamento = dados.get("departamento")
         modelo = dados.get("modelo")
+        empresa = dados.get("empresa")
 
-        if not destinatario or not assunto or not departamento or not modelo:
+        if not destinatarios or not assunto or not departamento or not modelo:
             return jsonify({"erro": "Campos obrigatórios faltando"}), 400
 
         corpo_email = EMAIL_MODELOS.get(departamento, {}).get(modelo, "")
@@ -62,9 +63,15 @@ def enviar_email():
 
         corpo_email = corpo_email.replace("{saudacao}", definir_saudacao())
 
-        enviar_email_outlook(destinatario, copia, assunto, corpo_email)
+        # Enviar e-mail para cada destinatário separadamente
+        if modelo == "informe_tecnico":
+            for destinatario in destinatarios:
+                enviar_informe_tecnico(destinatario, copia, assunto, corpo_email)
+        if modelo == "tentativa_contato":
+            enviar_tentativa_contato(destinatarios, copia, assunto, corpo_email, empresa)
 
-        return jsonify({"mensagem": "E-mail enviado com sucesso!"})
+
+        return jsonify({"mensagem": "E-mails enviados com sucesso!"})
 
     except Exception as e:
         print(f"Erro ao enviar e-mail: {str(e)}")
