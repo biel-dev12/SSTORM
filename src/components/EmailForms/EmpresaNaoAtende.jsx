@@ -44,6 +44,7 @@ function EmpresaNaoAtende({ modelo, onSend, setModeloSelecionado}) {
             const novoAssunto = `Situação da Empresa ${novaEmpresa}`;
             setEmail({ ...email, empresa: novaEmpresa, assunto: novoAssunto });
           }}
+          required
         />
       </Box>
 
@@ -54,6 +55,7 @@ function EmpresaNaoAtende({ modelo, onSend, setModeloSelecionado}) {
           name="mes"
           value={email.mes}
           onChange={(e) => setEmail({ ...email, mes: e.target.value })}
+          required
         >
           <option value="">Selecione o mês</option>
           {[

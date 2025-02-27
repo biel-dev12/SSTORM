@@ -6,6 +6,7 @@ import InformeTecnico from "../../components/EmailForms/InformeTecnico.jsx";
 import TentativaContato from "../../components/EmailForms/TentativaContato.jsx";
 import EmpresaNaoAtende from "../../components/EmailForms/EmpresaNaoAtende.jsx";
 import { EMAIL_API } from "../../api/config.js";
+import { toast } from "react-toastify";
 
 function SendEmail() {
   const [modeloSelecionado, setModeloSelecionado] = useState(null);
@@ -21,9 +22,9 @@ function SendEmail() {
           },
         }
       );
-      alert("E-mail enviado com sucesso!");
+      toast.success("E-mail enviado com sucesso!");
     } catch (error) {
-      alert("Erro ao enviar o e-mail.");
+      toast.error("Erro ao enviar o e-mail.");
       console.error(
         "Erro:",
         error.response ? error.response.data : error.message

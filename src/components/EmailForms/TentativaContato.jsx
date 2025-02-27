@@ -43,6 +43,7 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
             const novoAssunto = `Agendamento de Inspeção na ${novaEmpresa}`;
             setEmail({ ...email, empresa: novaEmpresa, assunto: novoAssunto });
           }}
+          required
         />
       </Box>
 
@@ -56,6 +57,7 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
           onChange={(e) =>
             setEmail({ ...email, destinatarios: e.target.value })
           }
+          required
         />
       </Box>
 

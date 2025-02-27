@@ -59,6 +59,7 @@ function InformeTecnico({ modelo, onSend, setModeloSelecionado }) {
               type="email"
               value={dest}
               onChange={(e) => handleDestinatarioChange(index, e.target.value)}
+              required
             />
             <RemoveDest
               type="button"
