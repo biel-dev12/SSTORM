@@ -21,19 +21,19 @@ const AppRoutes = () => {
             <Route path="/pgr-pcmso" element={<ProtectedRoute>
                   <PgrPcmso />
                 </ProtectedRoute>} />
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
-            />
              <Route
               path="/send-email"
               element={
                 <ProtectedRoute>
                   <SendEmail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <Home />
                 </ProtectedRoute>
               }
             />
