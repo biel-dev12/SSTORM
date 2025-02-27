@@ -39,7 +39,7 @@ function Login() {
         toast.success("Login realizado com sucesso!", { autoClose: 1000 });
 
         setTimeout(() => {
-          navigate("/home");
+          navigate("/");
         }, 1000);
       } else {
         throw new Error("Usuário não encontrado.");
