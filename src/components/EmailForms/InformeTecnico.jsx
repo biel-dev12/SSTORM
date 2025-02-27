@@ -15,10 +15,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 function InformeTecnico({ modelo, onSend, setModeloSelecionado }) {
   const [email, setEmail] = useState({
     destinatarios: [""],
-    copia: [
-      "segurancanotrabalho@doctorspraiagrande.com.br",
-      "ricardo@doctorspraiagrande.com.br",
-    ],
+    copia: ["segurancanotrabalho@doctorspraiagrande.com.br"],
     assunto: `Envio de Informe Técnico e Modelos de Ficha de EPI e OS - Ordem de Serviço`,
     modelo: modelo.nome,
     departamento: modelo.departamento,
