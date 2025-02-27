@@ -63,7 +63,7 @@ const App = () => {
           collapsed={collapsed}
         >
           <MenuEl.Item key="1" icon={<MdHome />}>
-            <Link to="/home">Página Inicial</Link>
+            <Link to="/">Página Inicial</Link>
           </MenuEl.Item>
 
           <MenuEl.SubMenu
