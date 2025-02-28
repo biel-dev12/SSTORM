@@ -28,7 +28,7 @@ function TentativaContato({ modelo, onSend, setModeloSelecionado }) {
           style={{ cursor: "pointer" }}
           onClick={() => setModeloSelecionado(null)}
         />
-        <h2>Enviar E-mail - Empresa não Atende</h2>
+        <h2>Enviar E-mail - Tentativa de Contato</h2>
       </Header>
 
       <Box>

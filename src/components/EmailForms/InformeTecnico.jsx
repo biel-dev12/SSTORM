@@ -48,7 +48,7 @@ function InformeTecnico({ modelo, onSend, setModeloSelecionado }) {
           style={{ cursor: "pointer" }}
           onClick={() => setModeloSelecionado(null)}
         />
-        <h2>Enviar E-mail - Empresa não Atende</h2>
+        <h2>Enviar E-mail - Informe Técnico</h2>
       </Header>
 
       <Box>
