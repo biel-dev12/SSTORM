@@ -8,6 +8,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import PgrPcmso from "./pages/PgrPcmso/PgrPcmso.jsx";
 import SendEmail from "./pages/SendEmail/SendEmail.jsx";
+import Dashboard from "./pages/DashboardPgr/Dashboard.jsx"
 
 const AppRoutes = () => {
   return (
@@ -26,6 +27,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <SendEmail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dash"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
                 </ProtectedRoute>
               }
             />

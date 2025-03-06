@@ -81,7 +81,7 @@ const App = () => {
           </MenuEl.SubMenu>
 
           <MenuEl.Item key="3" icon={<TbDatabaseSearch />}>
-            <Link to="/settings">Banco de Cargos</Link>
+            <Link to="/dash">Banco de Cargos</Link>
           </MenuEl.Item>
 
           <MenuEl.Item key="4" icon={<RiMailSendFill />}>
