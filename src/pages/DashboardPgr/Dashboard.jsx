@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCompanies, updateCompany } from "../../api/companyService";
+import { fetchCompanies, updateCompany } from "../../api/companyService.js";
 import { Container, Header, Title, DashboardGrid, Card, TableContainer, Table, TableRow, TableHead, TableCell, TableBody, Button, Input } from "./styles.js";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
