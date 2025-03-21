@@ -10,7 +10,7 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
   const [formData, setFormData] = useState({
     ds_type_inspection: "",
     dt_release: "",
-    ds_type_service: "",
+    cd_id_type_service: "",
     dt_contele: "",
     cd_id_contele_tec: "",
     dt_basic_doc: "",
@@ -23,16 +23,24 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
     cd_id_sub_tec: "",
     ds_obs: "",
     cd_id_company_doc: companyId || "",
+    id_pgr_pcmso: ""
   });
 
   useEffect(() => {
     if (visible && companyId) {
       getPgrByCompany(companyId).then((data) => {
-        if (data) {
+        console.log("Dados retornados da API:", data); // Verificando a resposta
+        if (data && data.length > 0) {
           setFormData((prev) => ({
             ...prev,
-            ...data, // Preenche o formData com os dados recebidos
-            cd_id_company_doc: companyId, // Garante que a empresa correta está sendo editada
+            ...data[0], // Acessa o primeiro item da array
+            cd_id_company_doc: companyId, // Empresa
+            id_pgr_pcmso: data[0].id_pgr_pcmso, // ID do PGR
+          }));
+        } else {
+          setFormData((prev) => ({
+            ...prev,
+            cd_id_company_doc: companyId, // Garante que a empresa esteja associada
           }));
         }
       }).catch((error) => {
@@ -40,7 +48,7 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
         toast.error("Erro ao carregar os dados do PGR.");
       });
     }
-  }, [visible, companyId]);
+  }, [visible, companyId]); 
 
   // Atualiza os valores do formulário
   const handleChange = (field, value) => {
@@ -49,14 +57,16 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
 
   // Envia os dados atualizados
   const handleSubmit = async () => {
+    console.log("ID do PGR no handleSubmit:", formData.id_pgr_pcmso);
     try {
-      if (!formData.cd_id_company_doc) {
-        toast.error("Empresa não identificada!");
+      if (!formData.id_pgr_pcmso) {
+        toast.error("ID do PGR não encontrado!");
         return;
       }
-
-      await updatePgr(formData.cd_id_company_doc, formData);
-
+  
+      console.log("Dados do formulario", formData)
+      await updatePgr(formData.id_pgr_pcmso, formData.cd_id_company_doc, formData);
+  
       toast.success("PGR atualizado com sucesso!");
       updatePgrData(formData); // Atualiza os dados no card
       onClose();
@@ -102,10 +112,10 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
         </InputBox>
 
         <InputBox>
-          <Label htmlFor="ds_type_service">Tipo de Serviço:</Label>
+          <Label htmlFor="cd_id_type_service">Tipo de Serviço:</Label>
           <TypeServiceList
-            value={formData.ds_type_service}
-            onChange={(value) => handleChange("ds_type_service", value)}
+            value={formData.cd_id_type_service}
+            onChange={(value) => handleChange("cd_id_type_service", value)}
           />
         </InputBox>
 
@@ -126,6 +136,7 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
             <TechList
               value={formData[tecField]}
               onChange={(value) => handleChange(tecField, value)}
+              
             />
           </InputBox>
         ))}

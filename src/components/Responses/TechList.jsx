@@ -29,7 +29,9 @@ const TechList = ({ value, onChange }) => {
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
-      
+      <option value="">
+        Selecione um Técnico
+      </option>
       {loading ? (
         <option value="loading">Carregando...</option>
       ) : techs.length > 0 ? (
