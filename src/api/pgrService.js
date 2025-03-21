@@ -14,3 +14,12 @@ export const updatePgr = async (idPgr, cd_company_id, data) => {
     throw error;
   }
 };
+
+export const getPgrByCompany = async (companyId) => {
+  try {
+    const response = await api.get(`${API_URL}/pgr/${companyId}`);
+    // setPgrData(response.data);
+  } catch (error) {
+    console.error("Erro ao buscar dados do PGR:", error);
+  }
+};

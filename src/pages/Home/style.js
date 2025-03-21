@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
-import { MdMoreHoriz, MdCheckCircle, MdAccessTimeFilled } from "react-icons/md";
+import { MdEditNote, MdCheckCircle, MdAccessTimeFilled } from "react-icons/md";
 
 import { theme } from "../../Theme";
 
@@ -274,7 +274,7 @@ export const HeaderCard = styled.div`
   }
 `;
 
-export const IconCard = styled(MdMoreHoriz)`
+export const IconCard = styled(MdEditNote)`
   font-size: ${theme.fonts.large};
   cursor: pointer;
 `;

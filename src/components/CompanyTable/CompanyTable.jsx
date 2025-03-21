@@ -17,7 +17,7 @@ import {
   EditIcon,
 } from "./style";
 import { IoMdCloseCircle } from "react-icons/io";
-import ModalEditComp from "../Modals/CompanyTable/ModalEditComp/ModalEditComp";
+import ModalEditPgr from "../Modals/Home/ModalEditPgr/ModalEditPgr.jsx";
 
 function CompanyTable({ month }) {
   const [companies, setCompanies] = useState([]);
@@ -225,7 +225,7 @@ function CompanyTable({ month }) {
 
                 {modal2Visible &&
                   selectedCompany?.id_company === company.id_company && (
-                    <ModalEditComp
+                    <ModalEditPgr
                       visible={modal2Visible}
                       onClose={() => setModal2Visible(false)}
                     />

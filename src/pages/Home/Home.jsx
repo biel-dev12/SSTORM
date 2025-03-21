@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Main,
   SearchBox,
@@ -24,21 +24,34 @@ import {
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
 import { IoArrowUndo } from "react-icons/io5";
-import { Dropdown } from "antd";
+import ModalEditPgr from "../../components/Modals/Home/ModalEditPgr/ModalEditPgr";
 import ModalAddComp from "../../components/Modals/Home/ModalAddComp/ModalAddComp";
 import ModalEditComp from "../../components/Modals/Home/ModalEditComp/ModalEditComp";
 import ModalDelComp from "../../components/Modals/Home/ModalDelComp/ModalDelComp";
 import { getCompany } from "../../api/companyService";
+import { getPgrByCompany, updatePgr } from "../../api/pgrService";
 import { toast } from "react-toastify";
 
 const Home = () => {
   const [modal1Visible, setModal1Visible] = useState(false);
   const [modal2Visible, setModal2Visible] = useState(false);
   const [modal3Visible, setModal3Visible] = useState(false);
+  const [modalPgrVisible, setModalPgrVisible] = useState(false);
 
   const [searchType, setSearchType] = useState("name");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [pgrData, setPgrData] = useState(null);
+
+  useEffect(() => {
+    if (selectedCompany) {
+      setPgrData(getPgrByCompany(selectedCompany.id_company));
+    }
+  }, [selectedCompany]);
+
+  const updatePgrData = (updatePgr) => {
+    setPgrData(updatePgr);
+  };
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -59,21 +72,6 @@ const Home = () => {
     );
   };
 
-  const items = [
-    {
-      key: "1",
-      label: "1st item",
-    },
-    {
-      key: "2",
-      label: "2nd item",
-    },
-    {
-      key: "3",
-      label: "3rd item",
-    },
-  ];
-
   return (
     <>
       <Main>
@@ -81,7 +79,10 @@ const Home = () => {
           <CompanyDisplay>
             <IoArrowUndo
               className="icon"
-              onClick={() => setSelectedCompany(null)}
+              onClick={() => {
+                setSelectedCompany(null);
+                setPgrData(null);
+              }}
             />{" "}
             Empresa atual: <span>{selectedCompany.nm_comp_name}</span>
           </CompanyDisplay>
@@ -196,90 +197,48 @@ const Home = () => {
         <CardsBox>
           <Card>
             <HeaderCard>
-              <p id="pgr">PGR/PCMSO</p>
-              <Dropdown
-                menu={{
-                  items,
-                }}
-              >
-                <IconCard />
-              </Dropdown>
+              <p id="pgr">
+                PGR{" "}
+                {selectedCompany && (
+                  <span>- Mês: {selectedCompany.ds_month_validity}</span>
+                )}
+              </p>
+              <IconCard onClick={() => setModalPgrVisible(true)} />
             </HeaderCard>
             <BodyCard>
-              <ItemCard>
-                <StatusIcon>
-                  <CheckIcon />
-                </StatusIcon>
+              {pgrData ? (
+                <>
+                  <ItemCard>
+                    <StatusIcon>
+                      <CheckIcon />
+                    </StatusIcon>
+                    <TextStatus>
+                      Contele{" "}
+                      <span>
+                        {pgrData.dt_contele ? "Alimentado" : "Pendente"}
+                      </span>{" "}
+                      - <span>{pgrData.cd_id_contele_tec || "N/A"}</span> (
+                      <span>{pgrData.dt_contele || "Sem data"}</span>)
+                    </TextStatus>
+                  </ItemCard>
+                </>
+              ) : (
                 <TextStatus>
-                  Contele <span id="statusContele">Alimentado</span> -{" "}
-                  <span id="tec">Beatriz</span> (
-                  <span id="date">29/11/2024</span>)
+                  Selecione uma empresa para ver os registros de PGR
                 </TextStatus>
-              </ItemCard>
-              <ItemCard>
-                <StatusIcon>
-                  <CheckIcon />
-                </StatusIcon>
-                <TextStatus>
-                  SOC+DOC Básico <span id="statusDocBasic">Realizado</span> -{" "}
-                  <span id="tec">Ricardo</span> (
-                  <span id="date">29/11/2024</span>)
-                </TextStatus>
-              </ItemCard>
-              <ItemCard>
-                <StatusIcon>
-                  <PendingIcon />
-                </StatusIcon>
-                <TextStatus>
-                  Inspeção <span id="statusInsp">Realizada</span> -{" "}
-                  <span id="tec">Marcos</span> (
-                  <span id="date">29/11/2024</span>)
-                </TextStatus>
-              </ItemCard>
-              <ItemCard>
-                <StatusIcon>
-                  <PendingIcon />
-                </StatusIcon>
-                <TextStatus>
-                  SOC+DOC Definitivo <span id="statusDocDef">Realizado</span> -{" "}
-                  <span id="tec">Ricardo</span> (
-                  <span id="date">29/11/2024</span>)
-                </TextStatus>
-              </ItemCard>
-              <ItemCard>
-                <StatusIcon>
-                  <PendingIcon />
-                </StatusIcon>
-                <TextStatus>
-                  Assinatura e Envio <span id="statusEnv">Realizado</span> -{" "}
-                  <span id="tec">Ricardo</span> (
-                  <span id="date">29/11/2024</span>)
-                </TextStatus>
-              </ItemCard>
+              )}
             </BodyCard>
           </Card>
           <Card>
             <HeaderCard>
               <p id="ltcat">LTCAT</p>
-              <Dropdown
-                menu={{
-                  items,
-                }}
-              >
-                <IconCard />
-              </Dropdown>
+              <IconCard />
             </HeaderCard>
           </Card>
           <Card>
             <HeaderCard>
               <p id="comp">COMPLEMENTOS</p>
-              <Dropdown
-                menu={{
-                  items,
-                }}
-              >
-                <IconCard />
-              </Dropdown>
+              <IconCard />
             </HeaderCard>
           </Card>
         </CardsBox>
@@ -299,6 +258,12 @@ const Home = () => {
           onClose={() => setModal3Visible(false)}
           companyData={selectedCompany}
           exitCompany={setSelectedCompany}
+        />
+        <ModalEditPgr
+          visible={modalPgrVisible}
+          onClose={() => setModalPgrVisible(false)}
+          companyId={selectedCompany?.id_company}
+          updatePgrData={updatePgrData}
         />
       </Main>
     </>
