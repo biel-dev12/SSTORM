@@ -29,6 +29,7 @@ const TypeServiceList = ({ value, onChange }) => {
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
+      <option value="">Selecione um tipo</option>
       
       {loading ? (
         <option value="loading">Carregando...</option>

@@ -19,7 +19,6 @@ import {
   StatusIcon,
   TextStatus,
   CheckIcon,
-  PendingIcon,
   CompanyDisplay,
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
@@ -29,8 +28,10 @@ import ModalAddComp from "../../components/Modals/Home/ModalAddComp/ModalAddComp
 import ModalEditComp from "../../components/Modals/Home/ModalEditComp/ModalEditComp";
 import ModalDelComp from "../../components/Modals/Home/ModalDelComp/ModalDelComp";
 import { getCompany } from "../../api/companyService";
-import { getPgrByCompany, updatePgr } from "../../api/pgrService";
+import { getPgrByCompany } from "../../api/pgrService";
+import { getTechById } from "../../api/techService";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 const Home = () => {
   const [modal1Visible, setModal1Visible] = useState(false);
@@ -42,6 +43,7 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [pgrData, setPgrData] = useState(null);
+  const [techs, setTechs] = useState({});
 
   useEffect(() => {
     if (selectedCompany) {
@@ -49,8 +51,42 @@ const Home = () => {
     }
   }, [selectedCompany]);
 
+  useEffect(() => {
+    if (pgrData) {
+      const fetchTechs = async () => {
+        const techFields = [
+          "cd_id_contele_tec",
+          "cd_id_bas_doc_tec",
+          "cd_id_insp_tec",
+          "cd_id_def_doc_tec",
+          "cd_id_sub_tec",
+        ];
+
+        const techPromises = techFields.map(async (field) => {
+          if (pgrData[field]) {
+            const name = await getTechById(pgrData[field]);
+            return { [field]: name };
+          }
+          return { [field]: "N/A" };
+        });
+
+        const results = await Promise.all(techPromises);
+        const techMap = Object.assign({}, ...results);
+
+        setTechs(techMap);
+      };
+
+      fetchTechs();
+    }
+  }, [pgrData]);
+
   const updatePgrData = (updatePgr) => {
     setPgrData(updatePgr);
+  };
+
+  const formatDateForDisplay = (dateString) => {
+    if (!dateString) return "Sem data";
+    return format(new Date(dateString), "dd-MM-yyyy");
   };
 
   const handleSearch = async (e) => {
@@ -71,6 +107,8 @@ const Home = () => {
       "$1.$2.$3/$4-$5"
     );
   };
+
+  console.log(techs)
 
   return (
     <>
@@ -217,8 +255,8 @@ const Home = () => {
                       <span>
                         {pgrData.dt_contele ? "Alimentado" : "Pendente"}
                       </span>{" "}
-                      - <span>{pgrData.cd_id_contele_tec || "N/A"}</span> (
-                      <span>{pgrData.dt_contele || "Sem data"}</span>)
+                      - <span>{techs.cd_id_contele_tec || "N/A"}</span> (
+                      <span>{formatDateForDisplay(pgrData.dt_contele)}</span>)
                     </TextStatus>
                   </ItemCard>
                 </>

@@ -55,9 +55,14 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const formatDateForInput = (isoDate) => {
+    if (!isoDate) return "";
+    return isoDate.split("T")[0]; // Pega apenas a parte "YYYY-MM-DD"
+  };
+
   // Envia os dados atualizados
   const handleSubmit = async () => {
-    console.log("ID do PGR no handleSubmit:", formData.id_pgr_pcmso);
+    console.log("type service:", formData.cd_id_type_service);
     try {
       if (!formData.id_pgr_pcmso) {
         toast.error("ID do PGR não encontrado!");
@@ -95,7 +100,7 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
             value={formData.ds_type_inspection}
             onChange={(e) => handleChange("ds_type_inspection", e.target.value)}
           >
-            <option value="" disabled>Selecione um tipo</option>
+            <option value="">Selecione um tipo</option>
             <option value="In">In</option>
             <option value="Tele">Tele</option>
           </select>
@@ -106,7 +111,7 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
           <Input
             type="date"
             id="dt_release"
-            value={formData.dt_release || ""}
+            value={formatDateForInput(formData.dt_release) || ""}
             onChange={(e) => handleChange("dt_release", e.target.value)}
           />
         </InputBox>
@@ -130,7 +135,7 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
             <Label>{label}:</Label>
             <Input
               type="date"
-              value={formData[dtField] || ""}
+              value={formatDateForInput(formData[dtField]) || ""}
               onChange={(e) => handleChange(dtField, e.target.value)}
             />
             <TechList
