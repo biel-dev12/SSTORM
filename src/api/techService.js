@@ -12,13 +12,13 @@ export const fetchTech = async () => {
 };
 
 export const getTechById = async (idTech) => {
-  if (!techId) return "N/A";
+  if (!idTech) return "N/A";
 
   try {
     const res = await api.get(`${API_URL}/tech/${idTech}`);
     return res.data;
   } catch (error) {
-    console.error(`Erro ao buscar técnico ${techId}:`, error);
-    return "N/A"; // Se houver erro, retorna "N/A"
+    console.error(`Erro ao buscar técnico ${idTech}:`, error);
+    return "N/A"; 
   }
 };

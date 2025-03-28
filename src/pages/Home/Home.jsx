@@ -20,6 +20,7 @@ import {
   TextStatus,
   CheckIcon,
   CompanyDisplay,
+  PendingIcon,
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
 import { IoArrowUndo } from "react-icons/io5";
@@ -32,6 +33,7 @@ import { getPgrByCompany } from "../../api/pgrService";
 import { getTechById } from "../../api/techService";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+import { getTypeServiceById } from "../../api/typeService";
 
 const Home = () => {
   const [modal1Visible, setModal1Visible] = useState(false);
@@ -44,44 +46,54 @@ const Home = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [pgrData, setPgrData] = useState(null);
   const [techs, setTechs] = useState({});
+  const [tServiceName, setTServiceName] = useState(null);
 
   useEffect(() => {
-    if (selectedCompany) {
-      setPgrData(getPgrByCompany(selectedCompany.id_company));
-    }
+    const fetchPgrData = async () => {
+      if (selectedCompany) {
+        const pgrResponse = await getPgrByCompany(selectedCompany.id_company);
+        setPgrData(pgrResponse[0]); // Dados do PGR
+
+        // Obter os técnicos relacionados com base nos IDs presentes
+        const techIds = [
+          pgrResponse[0]?.cd_id_contele_tec,
+          pgrResponse[0]?.cd_id_bas_doc_tec,
+          pgrResponse[0]?.cd_id_insp_tec,
+          pgrResponse[0]?.cd_id_def_doc_tec,
+          // Adicione aqui mais IDs de técnicos, se necessário
+        ];
+
+        // Obter informações de todos os técnicos
+        const techResponses = await Promise.all(
+          techIds.map((id) => id && getTechById(id))
+        );
+
+        // Atualizar o estado dos técnicos
+        const techsObject = techResponses.reduce((acc, tech, index) => {
+          const techId = techIds[index];
+          acc[techId] = tech ? tech.nm_tec : "N/A"; // Armazenando o nome do técnico ou "N/A"
+          return acc;
+        }, {});
+
+        setTechs(techsObject); // Atualizando o estado
+      }
+    };
+
+    fetchPgrData();
   }, [selectedCompany]);
 
   useEffect(() => {
-    if (pgrData) {
-      const fetchTechs = async () => {
-        const techFields = [
-          "cd_id_contele_tec",
-          "cd_id_bas_doc_tec",
-          "cd_id_insp_tec",
-          "cd_id_def_doc_tec",
-          "cd_id_sub_tec",
-        ];
-
-        const techPromises = techFields.map(async (field) => {
-          if (pgrData[field]) {
-            const name = await getTechById(pgrData[field]);
-            return { [field]: name };
-          }
-          return { [field]: "N/A" };
-        });
-
-        const results = await Promise.all(techPromises);
-        const techMap = Object.assign({}, ...results);
-
-        setTechs(techMap);
-      };
-
-      fetchTechs();
+    if (pgrData?.cd_id_type_service) {
+      getTService(pgrData.cd_id_type_service).then(setTServiceName);
     }
   }, [pgrData]);
 
-  const updatePgrData = (updatePgr) => {
+  const updatePgrData = (updatePgr, idCompany) => {
     setPgrData(updatePgr);
+
+    setSelectedCompany(null);
+    setSelectedCompany(idCompany);
+    handleSearch();
   };
 
   const formatDateForDisplay = (dateString) => {
@@ -90,7 +102,7 @@ const Home = () => {
   };
 
   const handleSearch = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     if (!searchQuery.trim()) {
       toast.warn("Por favor, insira um valor de busca.", { autoClose: 700 });
@@ -108,7 +120,10 @@ const Home = () => {
     );
   };
 
-  console.log(techs)
+  const getTService = async (idTService) => {
+    const res = await getTypeServiceById(idTService);
+    return res.nm_type_service;
+  };
 
   return (
     <>
@@ -238,7 +253,12 @@ const Home = () => {
               <p id="pgr">
                 PGR{" "}
                 {selectedCompany && (
-                  <span>- Mês: {selectedCompany.ds_month_validity}</span>
+                  <>
+                    <span>- Mês: {selectedCompany.ds_month_validity}</span>
+                    {pgrData && pgrData.cd_id_type_service && (
+                      <span> - {tServiceName}</span>
+                    )}
+                  </>
                 )}
               </p>
               <IconCard onClick={() => setModalPgrVisible(true)} />
@@ -248,15 +268,57 @@ const Home = () => {
                 <>
                   <ItemCard>
                     <StatusIcon>
-                      <CheckIcon />
+                      {pgrData.dt_contele ? <CheckIcon /> : <PendingIcon />}
                     </StatusIcon>
                     <TextStatus>
                       Contele{" "}
                       <span>
                         {pgrData.dt_contele ? "Alimentado" : "Pendente"}
                       </span>{" "}
-                      - <span>{techs.cd_id_contele_tec || "N/A"}</span> (
-                      <span>{formatDateForDisplay(pgrData.dt_contele)}</span>)
+                      - <span>{techs[pgrData.cd_id_contele_tec] || "N/A"}</span>{" "}
+                      (<span>{formatDateForDisplay(pgrData.dt_contele)}</span>)
+                    </TextStatus>
+                  </ItemCard>
+                  <ItemCard>
+                    <StatusIcon>
+                      {pgrData.dt_basic_doc ? <CheckIcon /> : <PendingIcon />}
+                    </StatusIcon>
+                    <TextStatus>
+                      SOC+DOC Básico{" "}
+                      <span>
+                        {pgrData.dt_basic_doc ? "Feito" : "Pendente"}
+                      </span>{" "}
+                      - <span>{techs[pgrData.cd_id_bas_doc_tec] || "N/A"}</span>{" "}
+                      (<span>{formatDateForDisplay(pgrData.dt_basic_doc)}</span>
+                      )
+                    </TextStatus>
+                  </ItemCard>
+                  <ItemCard>
+                    <StatusIcon>
+                      {pgrData.dt_inspection ? <CheckIcon /> : <PendingIcon />}
+                    </StatusIcon>
+                    <TextStatus>
+                      Inepção Técnica{" "}
+                      <span>
+                        {pgrData.dt_inspection ? "Realizada" : "Pendente"}
+                      </span>{" "}
+                      - <span>{techs[pgrData.cd_id_insp_tec] || "N/A"}</span>{" "}
+                      (<span>{formatDateForDisplay(pgrData.dt_inspection)}</span>
+                      )
+                    </TextStatus>
+                  </ItemCard>
+                  <ItemCard>
+                    <StatusIcon>
+                      {pgrData.dt_definitive_doc ? <CheckIcon /> : <PendingIcon />}
+                    </StatusIcon>
+                    <TextStatus>
+                      SOC+DOC Definitivo{" "}
+                      <span>
+                        {pgrData.dt_definitive_doc ? "Feito" : "Pendente"}
+                      </span>{" "}
+                      - <span>{techs[pgrData.cd_id_def_doc_tec] || "N/A"}</span>{" "}
+                      (<span>{formatDateForDisplay(pgrData.dt_definitive_doc)}</span>
+                      )
                     </TextStatus>
                   </ItemCard>
                 </>

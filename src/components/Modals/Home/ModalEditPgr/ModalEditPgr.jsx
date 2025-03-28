@@ -62,21 +62,28 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
 
   // Envia os dados atualizados
   const handleSubmit = async () => {
-    console.log("type service:", formData.cd_id_type_service);
+    const updatedData = {
+      ...formData,
+      dt_contele: formData.dt_contele ? formatDateForInput(formData.dt_contele) : null, 
+      dt_basic_doc: formData.dt_basic_doc ? formatDateForInput(formData.dt_basic_doc) : null,
+      dt_inspection: formData.dt_inspection ? formatDateForInput(formData.dt_inspection) : null, 
+      dt_definitive_doc: formData.dt_definitive_doc ? formatDateForInput(formData.dt_definitive_doc) : null,
+    };
+
+    console.log(updatedData)
+
     try {
-      if (!formData.id_pgr_pcmso) {
+      if (!updatedData.id_pgr_pcmso) {
         toast.error("ID do PGR não encontrado!");
         return;
       }
   
-      console.log("Dados do formulario", formData)
-      await updatePgr(formData.id_pgr_pcmso, formData.cd_id_company_doc, formData);
+      await updatePgr(updatedData.id_pgr_pcmso, updatedData.cd_id_company_doc, updatedData);
   
-      toast.success("PGR atualizado com sucesso!");
-      updatePgrData(formData); // Atualiza os dados no card
+      toast.success("PGR atualizado com sucesso!", {autoClose: 800});
+      updatePgrData(updatedData, updatedData.cd_id_company_doc);
       onClose();
     } catch (error) {
-      console.error("Erro ao atualizar PGR:", error);
       toast.error("Erro ao atualizar PGR. Verifique os dados e tente novamente.");
     }
   };

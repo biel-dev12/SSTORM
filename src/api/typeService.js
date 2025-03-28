@@ -11,3 +11,13 @@ export const fetchTServices = async () => {
         throw error
     }
 }
+
+export const getTypeServiceById = async (idTService) => {
+    try {
+      const res = await api.get(`${API_URL}/tservice/${idTService}`);
+      return res.data;
+    } catch (error) {
+      console.error(`Erro ao buscar tipo de serviço ${idTService}:`, error);
+    }
+  };
+  
