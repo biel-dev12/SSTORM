@@ -28,7 +28,7 @@ function InformeTecnico({ modelo, onSend, setModeloSelecionado }) {
   };
 
   const adicionarDestinatario = () => {
-    if (email.destinatarios.length < 10) {
+    if (email.destinatarios.length < 20) {
       setEmail({ ...email, destinatarios: [...email.destinatarios, ""] });
     }
   };
