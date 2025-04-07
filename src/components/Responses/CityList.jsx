@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { fetchCities } from "../../api/cityService";
 import { toast } from "react-toastify";
 
-
 const CityList = ({ value, onChange }) => {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,15 +28,13 @@ const CityList = ({ value, onChange }) => {
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
-      
+      <option value="">Selecione uma Cidade</option>
+
       {loading ? (
         <option value="loading">Carregando...</option>
       ) : cities.length > 0 ? (
         cities.map((city) => (
-          <option
-            key={city.id_city}
-            value={city.id_city}
-          >
+          <option key={city.id_city} value={city.id_city}>
             {city.sg_city}
           </option>
         ))

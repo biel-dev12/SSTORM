@@ -64,10 +64,12 @@ const ModalEditPgr = ({ visible, onClose, companyId, updatePgrData }) => {
   const handleSubmit = async () => {
     const updatedData = {
       ...formData,
+      dt_release: formData.dt_release ? formatDateForInput(formData.dt_release) : null, 
       dt_contele: formData.dt_contele ? formatDateForInput(formData.dt_contele) : null, 
       dt_basic_doc: formData.dt_basic_doc ? formatDateForInput(formData.dt_basic_doc) : null,
       dt_inspection: formData.dt_inspection ? formatDateForInput(formData.dt_inspection) : null, 
       dt_definitive_doc: formData.dt_definitive_doc ? formatDateForInput(formData.dt_definitive_doc) : null,
+      dt_submission_doc: formData.dt_submission_doc ? formatDateForInput(formData.dt_submission_doc) : null,
     };
 
     console.log(updatedData)

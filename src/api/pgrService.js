@@ -30,3 +30,31 @@ export const getPgrByCompany = async (companyId) => {
   }
 };
 
+export const monthMapping = {
+  Janeiro: "01",
+  Fevereiro: "02",
+  Março: "03",
+  Abril: "04",
+  Maio: "05",
+  Junho: "06",
+  Julho: "07",
+  Agosto: "08",
+  Setembro: "09",
+  Outubro: "10",
+  Novembro: "11",
+  Dezembro: "12",
+};
+
+export const getPgrByMonth = async (monthName) => {
+  try {
+    const monthNumber = monthMapping[monthName];
+    if (!monthNumber) throw new Error("Mês inválido");
+
+    const response = await api.get(`${API_URL}/pgr/month/${monthNumber}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar PGR:", error);
+    return [];
+  }
+};
+

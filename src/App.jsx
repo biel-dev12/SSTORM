@@ -25,10 +25,9 @@ const App = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(true);
   const username = user?.username || "Visitante";
- 
 
   const handleLogout = () => {
-    if(user){
+    if (user) {
       toast.info("Saindo...", {
         autoClose: 500,
       });
@@ -51,9 +50,7 @@ const App = () => {
           <div className="img-box">
             <img src="/assets/doctors-fav.svg" alt="Logo" />
           </div>
-          {!collapsed && (
-            <div className="username">{username}</div>
-          )}
+          {!collapsed && <div className="username">{username}</div>}
         </FavLogo>
 
         <MenuEl
@@ -77,6 +74,9 @@ const App = () => {
             </MenuEl.Item>
             <MenuEl.Item key="2.2">
               <Link to="/docs/ltcat">LTCAT</Link>
+            </MenuEl.Item>
+            <MenuEl.Item key="2.3">
+              <Link to="/docs/ltcat">Complementos</Link>
             </MenuEl.Item>
           </MenuEl.SubMenu>
 

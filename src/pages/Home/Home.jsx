@@ -51,6 +51,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPgrData = async () => {
       if (selectedCompany) {
+        console.log(selectedCompany)
         const pgrResponse = await getPgrByCompany(selectedCompany.id_company);
         setPgrData(pgrResponse[0]); // Dados do PGR
 
@@ -254,7 +255,7 @@ const Home = () => {
                 PGR{" "}
                 {selectedCompany && (
                   <>
-                    <span>- Mês: {selectedCompany.ds_month_validity}</span>
+                    <span>- Mês: {selectedCompany.ds_month_validity} - {selectedCompany.sg_city}</span>
                     {pgrData && pgrData.cd_id_type_service && (
                       <span> - {tServiceName}</span>
                     )}
