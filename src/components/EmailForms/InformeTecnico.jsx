@@ -68,7 +68,7 @@ function InformeTecnico({ modelo, onSend, setModeloSelecionado }) {
             />
           </div>
         ))}
-        {email.destinatarios.length < 10 && (
+        {email.destinatarios.length < 20 && (
           <AddDest type="button" onClick={adicionarDestinatario} />
         )}
       </Box>
