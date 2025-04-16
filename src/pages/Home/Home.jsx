@@ -99,7 +99,7 @@ const Home = () => {
 
   const formatDateForDisplay = (dateString) => {
     if (!dateString) return "Sem data";
-    return format(new Date(dateString), "dd-MM-yyyy");
+    return format(new Date(dateString), "dd/MM/yyyy");
   };
 
   const handleSearch = async (e) => {

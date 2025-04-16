@@ -1,83 +1,45 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  padding: 20px;
-  font-family: Arial, sans-serif;
-`;
-
-export const Header = styled.div`
+export const DashboardWrapper = styled.div`
+  padding: 16px;
+  background: #fdfdfd;
+  border-bottom: 1px solid #ddd;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 20px;
 `;
 
-export const Title = styled.h1`
-  font-size: 24px;
+export const ChartsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
 `;
 
-export const DashboardGrid = styled.div`
+export const ChartBox = styled.div`
+  width: 280px;
+  height: auto;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.05);
+`;
+
+export const KPIRow = styled.div`
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 
-export const Card = styled.div`
-  background: #fff;
-  padding: 20px;
+export const KPIBox = styled.div`
+  background-color: #fafafa;
+  padding: 16px 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  flex: 1;
-`;
-
-export const TableContainer = styled.div`
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-`;
-
-export const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-export const TableRow = styled.tr`
-  &:nth-child(even) {
-    background: #f9f9f9;
-  }
-`;
-
-export const TableHead = styled.thead`
-  background: #007bff;
-  color: white;
-`;
-
-export const TableCell = styled.td`
-  padding: 10px;
   border: 1px solid #ddd;
-  text-align: center;
-`;
-
-export const TableBody = styled.tbody``;
-
-export const Button = styled.button`
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background: #0056b3;
-  }
-`;
-
-export const Input = styled.input`
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  min-width: 140px;
 `;

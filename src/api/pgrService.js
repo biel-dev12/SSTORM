@@ -30,6 +30,11 @@ export const getPgrByCompany = async (companyId) => {
   }
 };
 
+export const getPgrItemByCompany = async (companyId) => {
+  const response = await api.get(`${API_URL}/pgr/${companyId}`);
+  return response.data?.[0];
+};
+
 export const monthMapping = {
   Janeiro: "01",
   Fevereiro: "02",
