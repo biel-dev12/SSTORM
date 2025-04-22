@@ -160,19 +160,19 @@ export const ActionBtn = styled.button`
     }
   }
 
-  &#add-emp {
+  &.green {
     .icon {
       color: ${theme.colors.green};
     }
   }
 
-  &#edit-emp {
+  &.blue {
     .icon {
       color: ${theme.colors.blue};
     }
   }
 
-  &#del-emp {
+  &.orange {
     .icon {
       color: ${theme.colors.orange};
     }
@@ -183,21 +183,21 @@ export const ActionBtn = styled.button`
       color: ${theme.colors.white};
     }
 
-    &#add-emp {
+    &.green {
       background-color: ${theme.colors.green};
       .icon {
         color: ${theme.colors.white};
       }
     }
 
-    &#edit-emp {
+    &.blue {
       background-color: ${theme.colors.blue};
       .icon {
         color: ${theme.colors.white};
       }
     }
 
-    &#del-emp {
+    &.orange {
       background-color: ${theme.colors.orange};
       .icon {
         color: ${theme.colors.white};

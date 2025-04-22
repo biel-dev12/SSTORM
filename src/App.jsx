@@ -80,12 +80,26 @@ const App = () => {
             </MenuEl.Item>
           </MenuEl.SubMenu>
 
-          <MenuEl.Item key="3" icon={<TbDatabaseSearch />}>
-            <Link to="/bc">Banco de Cargos</Link>
-          </MenuEl.Item>
+          {/* <MenuEl.SubMenu
+            key="3"
+            title="Gerar Docs"
+            icon={<IoDocumentAttach />}
+            className="item"
+          >
+            <MenuEl.Item key="3.1">
+              <Link to="/create-pgr">PGR</Link>
+            </MenuEl.Item>
+            <MenuEl.Item key="3.2">
+              <Link to="/create-ltcat">LTCAT</Link>
+            </MenuEl.Item>
+          </MenuEl.SubMenu> */}
 
           <MenuEl.Item key="4" icon={<RiMailSendFill />}>
             <Link to="/send-email">Enviar E-mail</Link>
+          </MenuEl.Item>
+
+          <MenuEl.Item key="5" icon={<TbDatabaseSearch />}>
+            <Link to="/bc">Banco de Cargos</Link>
           </MenuEl.Item>
 
           {!collapsed && (
@@ -94,11 +108,11 @@ const App = () => {
             </MenuEl.Item>
           )}
 
-          <MenuEl.Item key="5" icon={<MdSettings />} className="user-item">
+          <MenuEl.Item key="6" icon={<MdSettings />} className="user-item">
             <Link to="/settings">Configurações</Link>
           </MenuEl.Item>
           <MenuEl.Item
-            key="6"
+            key="7"
             icon={<MdExitToApp />}
             className="user-item"
             onClick={handleLogout}

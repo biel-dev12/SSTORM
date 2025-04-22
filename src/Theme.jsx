@@ -12,6 +12,7 @@ export const theme = {
     //Doctor's colors:
     blue: "#327EC1",
     orange: "#F07E13",
+    orangeDark: "#e45e00",
     green: "#6AAE32",
     excel: {
       darkGray: "#777777",

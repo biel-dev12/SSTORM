@@ -8,6 +8,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import PgrPcmso from "./pages/PgrPcmso/PgrPcmso.jsx";
 import SendEmail from "./pages/SendEmail/SendEmail.jsx";
+import CreateLtcat from "./pages/CreateDocs/CreateLtcat/CreateLtcat.jsx";
 
 const AppRoutes = () => {
   return (
@@ -18,10 +19,23 @@ const AppRoutes = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/pgr-pcmso" element={<ProtectedRoute>
+            <Route
+              path="/pgr-pcmso"
+              element={
+                <ProtectedRoute>
                   <PgrPcmso />
-                </ProtectedRoute>} />
-             <Route
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/create-ltcat"
+              element={
+                <ProtectedRoute>
+                  <CreateLtcat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/send-email"
               element={
                 <ProtectedRoute>

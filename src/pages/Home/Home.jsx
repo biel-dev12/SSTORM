@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Main,
   SearchBox,
@@ -23,7 +24,7 @@ import {
   PendingIcon,
 } from "./style";
 import { MdAddCircle, MdDelete, MdOutlineBorderColor } from "react-icons/md";
-import { IoArrowUndo } from "react-icons/io5";
+import { IoArrowUndo, IoDocumentAttach } from "react-icons/io5";
 import ModalEditPgr from "../../components/Modals/Home/ModalEditPgr/ModalEditPgr";
 import ModalAddComp from "../../components/Modals/Home/ModalAddComp/ModalAddComp";
 import ModalEditComp from "../../components/Modals/Home/ModalEditComp/ModalEditComp";
@@ -47,6 +48,8 @@ const Home = () => {
   const [pgrData, setPgrData] = useState(null);
   const [techs, setTechs] = useState({});
   const [tServiceName, setTServiceName] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPgrData = async () => {
@@ -204,7 +207,7 @@ const Home = () => {
         <ActionsBox>
           <ActionBtn
             type="primary"
-            id="add-emp"
+            className="orange"
             onClick={() => setModal1Visible(true)}
           >
             <div>
@@ -213,7 +216,7 @@ const Home = () => {
             </div>
           </ActionBtn>
           <ActionBtn
-            id="edit-emp"
+            className="green"
             type="primary"
             onClick={() => {
               if (selectedCompany) {
@@ -230,7 +233,7 @@ const Home = () => {
             </div>
           </ActionBtn>
           <ActionBtn
-            id="del-emp"
+            className="blue"
             type="primary"
             onClick={() => {
               if (selectedCompany) {
@@ -247,6 +250,24 @@ const Home = () => {
               <span>Excluir Emp.</span>
             </div>
           </ActionBtn>
+          <ActionBtn
+            className="orange"
+            type="primary"
+            onClick={() => {
+              if (selectedCompany) {
+                navigate("/create-ltcat", { state: { empresa: selectedCompany } });
+              } else {
+                toast.warn("Selecione uma empresa para gerar o LTCAT.", {
+                  autoClose: 1000,
+                });
+              }
+            }}
+          >
+            <div>
+              <IoDocumentAttach className="icon" />
+              <span>Gerar LTCAT</span>
+            </div>
+          </ActionBtn>
         </ActionsBox>
         <CardsBox>
           <Card>
@@ -255,9 +276,9 @@ const Home = () => {
                 PGR{" "}
                 {selectedCompany && (
                   <>
-                    <span>- Mês: {selectedCompany.ds_month_validity} - {selectedCompany.sg_city}</span>
+                    <span> | Mês: {selectedCompany.ds_month_validity} - {selectedCompany.sg_city}</span>
                     {pgrData && pgrData.cd_id_type_service && (
-                      <span> - {tServiceName}</span>
+                      <span>{tServiceName}</span>
                     )}
                   </>
                 )}
