@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp/SignUp";
 import PgrPcmso from "./pages/PgrPcmso/PgrPcmso.jsx";
 import SendEmail from "./pages/SendEmail/SendEmail.jsx";
 import CreateLtcat from "./pages/CreateDocs/CreateLtcat/CreateLtcat.jsx";
+import CreateCert from "./pages/CreateDocs/CreateCert/CreateCert.jsx";
+import ImportLtcat from "./pages/CreateDocs/ImportLtcat.jsx/ImportLtcat.jsx";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +34,22 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <CreateLtcat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/import-ltcat"
+              element={
+                <ProtectedRoute>
+                  <ImportLtcat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cert-nr35"
+              element={
+                <ProtectedRoute>
+                  <CreateCert />
                 </ProtectedRoute>
               }
             />

@@ -1,5 +1,4 @@
-// src/pages/CreateLtcat/style.js
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { theme } from "../../../Theme";
 import { MdDelete } from "react-icons/md";
 
@@ -177,3 +176,56 @@ export const DeleteBtn = styled(MdDelete)`
     opacity: 0.7;
   }
 `;
+
+export const ToggleModeButton = styled.button`
+  background-color: ${theme.colors.gray};
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid ${theme.colors.gray};
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
+`;
+
+export const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+`;
+
+export const LoaderText = styled.span`
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+`;
+
+const rotate = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoaderSpinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid ${theme.colors.orange};
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: ${rotate} 1s linear infinite;
+`;
+
+

@@ -2,6 +2,7 @@ import { useAuth } from "./components/AuthContext.jsx";
 import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
+import { PiCertificateBold  } from "react-icons/pi";
 import { RiMailSendFill } from "react-icons/ri";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -80,19 +81,16 @@ const App = () => {
             </MenuEl.Item>
           </MenuEl.SubMenu>
 
-          {/* <MenuEl.SubMenu
+          <MenuEl.SubMenu
             key="3"
             title="Gerar Docs"
-            icon={<IoDocumentAttach />}
+            icon={<PiCertificateBold  />}
             className="item"
           >
             <MenuEl.Item key="3.1">
-              <Link to="/create-pgr">PGR</Link>
+              <Link to="/cert-nr35">NR-35</Link>
             </MenuEl.Item>
-            <MenuEl.Item key="3.2">
-              <Link to="/create-ltcat">LTCAT</Link>
-            </MenuEl.Item>
-          </MenuEl.SubMenu> */}
+          </MenuEl.SubMenu>
 
           <MenuEl.Item key="4" icon={<RiMailSendFill />}>
             <Link to="/send-email">Enviar E-mail</Link>
