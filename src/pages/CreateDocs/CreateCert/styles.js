@@ -181,7 +181,7 @@ export const ToggleModeButton = styled.button`
   background-color: ${theme.colors.gray};
   border: 1px solid #ccc;
   padding: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
   cursor: pointer;
   border-radius: 5px;
   font-weight: bold;
