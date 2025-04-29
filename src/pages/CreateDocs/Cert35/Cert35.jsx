@@ -16,11 +16,12 @@ import {
   LoaderContainer,
   LoaderSpinner,
   LoaderText,
-} from "./styles";
+} from "./styles.js";
 import { MdHome } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const CreateCert = () => {
+const Cert35
+ = () => {
   const navigate = useNavigate();
   const [modoLote, setModoLote] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,7 @@ const CreateCert = () => {
     fim: "",
     nome: "",
     endereco: "",
-    modelo: "formacao",
+    modelo: "formacao35",
   });
 
   const [listaNomes, setListaNomes] = useState("");
@@ -143,8 +144,8 @@ const CreateCert = () => {
               <input
                 type="radio"
                 name="modelo"
-                value="formacao"
-                checked={form.modelo === "formacao"}
+                value="formacao35"
+                checked={form.modelo === "formacao35"}
                 onChange={handleChange}
               />
               Funcionários
@@ -153,8 +154,8 @@ const CreateCert = () => {
               <input
                 type="radio"
                 name="modelo"
-                value="empresa"
-                checked={form.modelo === "empresa"}
+                value="empresa35"
+                checked={form.modelo === "empresa35"}
                 onChange={handleChange}
               />
               Empresas
@@ -260,4 +261,5 @@ const CreateCert = () => {
   );
 };
 
-export default CreateCert;
+export default Cert35
+;

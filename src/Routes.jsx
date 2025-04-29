@@ -9,8 +9,9 @@ import SignUp from "./pages/SignUp/SignUp";
 import PgrPcmso from "./pages/PgrPcmso/PgrPcmso.jsx";
 import SendEmail from "./pages/SendEmail/SendEmail.jsx";
 import CreateLtcat from "./pages/CreateDocs/CreateLtcat/CreateLtcat.jsx";
-import CreateCert from "./pages/CreateDocs/CreateCert/CreateCert.jsx";
+import CreateCert from "./pages/CreateDocs/Cert35/Cert35.jsx";
 import ImportLtcat from "./pages/CreateDocs/ImportLtcat.jsx/ImportLtcat.jsx";
+import Cert06 from "./pages/CreateDocs/Cert06/Cert06.jsx";
 
 const AppRoutes = () => {
   return (
@@ -50,6 +51,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <CreateCert />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cert-nr06"
+              element={
+                <ProtectedRoute>
+                  <Cert06 />
                 </ProtectedRoute>
               }
             />

@@ -90,6 +90,9 @@ const App = () => {
             <MenuEl.Item key="3.1">
               <Link to="/cert-nr35">NR-35</Link>
             </MenuEl.Item>
+            <MenuEl.Item key="3.2">
+              <Link to="/cert-nr06">NR-06</Link>
+            </MenuEl.Item>
           </MenuEl.SubMenu>
 
           <MenuEl.Item key="4" icon={<RiMailSendFill />}>
