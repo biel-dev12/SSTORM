@@ -32,6 +32,7 @@ const CreateCert = () => {
     fim: "",
     nome: "",
     endereco: "",
+    modelo: "formacao",
   });
 
   const [listaNomes, setListaNomes] = useState("");
@@ -67,6 +68,7 @@ const CreateCert = () => {
               inicio: form.inicio,
               fim: form.fim,
               endereco: form.endereco,
+              modelo: form.modelo
             },
           },
           { responseType: "blob" }
@@ -96,7 +98,8 @@ const CreateCert = () => {
           { responseType: "blob" }
         );
 
-        const fileName = response.headers["x-filename"] || "documento_gerado.docx";
+        const fileName =
+          response.headers["x-filename"] || "documento_gerado.docx";
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const a = document.createElement("a");
         a.href = url;
@@ -127,12 +130,37 @@ const CreateCert = () => {
       </TopBar>
 
       <StyledForm onSubmit={handleSubmit}>
-        <ToggleModeButton
-          type="button"
-          onClick={() => setModoLote(!modoLote)}
-        >
-          {modoLote ? "Alternar para modo individual" : "Alternar para modo em lote"}
+        <ToggleModeButton type="button" onClick={() => setModoLote(!modoLote)}>
+          {modoLote
+            ? "Alternar para modo individual"
+            : "Alternar para modo em lote"}
         </ToggleModeButton>
+
+        <FormGroup size={1}>
+          <label>Tipo de Certificado:</label>
+          <div style={{ display: "flex", gap: "20px", marginTop: "8px" }}>
+            <label>
+              <input
+                type="radio"
+                name="modelo"
+                value="formacao"
+                checked={form.modelo === "formacao"}
+                onChange={handleChange}
+              />
+              Funcionários
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="modelo"
+                value="empresa"
+                checked={form.modelo === "empresa"}
+                onChange={handleChange}
+              />
+              Empresas
+            </label>
+          </div>
+        </FormGroup>
 
         <TitleForm>Informações Básicas</TitleForm>
 
