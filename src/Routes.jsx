@@ -12,6 +12,7 @@ import CreateLtcat from "./pages/CreateDocs/CreateLtcat/CreateLtcat.jsx";
 import CreateCert from "./pages/CreateDocs/Cert35/Cert35.jsx";
 import ImportLtcat from "./pages/CreateDocs/ImportLtcat.jsx/ImportLtcat.jsx";
 import Cert06 from "./pages/CreateDocs/Cert06/Cert06.jsx";
+import CertPgr from "./pages/CreateDocs/CertPgr/CertPgr,.jsx";
 
 const AppRoutes = () => {
   return (
@@ -59,6 +60,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <Cert06 />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cert-pgr"
+              element={
+                <ProtectedRoute>
+                  <CertPgr />
                 </ProtectedRoute>
               }
             />
