@@ -1,4 +1,4 @@
-import styled  from "styled-components";
+import styled from "styled-components";
 import { theme } from "../../Theme";
 
 export const Container = styled.div`
@@ -51,9 +51,9 @@ export const Main = styled.main`
   display: flex;
   flex-direction: row;
   background-color: transparent;
-  justify-content: center; 
+  justify-content: center;
   // gap: ;
-`
+`;
 
 export const TextArea = styled.textarea`
   width: 100%;
@@ -67,8 +67,8 @@ export const TextArea = styled.textarea`
 
 export const Input = styled.input`
   width: 100%;
-  padding: .5rem;
-  font-size: .9rem;
+  padding: 0.5rem;
+  font-size: 0.9rem;
   border: 1px solid ${theme.colors.gray};
   border-radius: 8px;
 `;
@@ -88,6 +88,16 @@ export const InfoGroup = styled.div`
 
 export const InfoItem = styled.div`
   font-size: 1rem;
+  // margin-bottom: 10px;
+  text-align: left;
+
+  pre {
+    margin: 0;
+    padding: 0;
+    white-space: pre-line;
+    text-align: left;
+    display: block;
+  }
 `;
 
 export const Orange = styled.span`
@@ -107,4 +117,20 @@ export const LeftContainer = styled.aside`
 export const RightContainer = styled.aside`
   width: 50%;
   padding-left: 2rem;
+`;
+
+export const CopyButton = styled.button`
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #e65c00;
+  }
 `;

@@ -12,9 +12,11 @@ import {
   InfoItem,
   Orange,
   Input,
+  CopyButton,
 } from "./styles";
 import { MdHome } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const parseText = (text) => {
   const result = {
@@ -84,8 +86,6 @@ const parseText = (text) => {
   return result;
 };
 
-
-
 const parseRiscos = (text) => {
   return text
     .split(/\r?\n/)
@@ -126,6 +126,39 @@ const CompleTxt = () => {
   const info = parseText(inputText);
   const riscosFormatados = parseRiscos(riscosText);
   const examesFormatados = parseExames(examesText);
+
+  const handleCopy = () => {
+    const textoFormatado = [
+      "*Empresa:*",
+      "",
+      `*CNPJ:* ${info.cnpj}`,
+      "",
+      `${(faturamento || "").toUpperCase()}`,
+      "",
+      `*Cargo:* ${info.cargo}`,
+      "",
+      "*Riscos:*",
+      riscosFormatados,
+      "",
+      "*Exames:*",
+      examesFormatados,
+      "",
+      `*E-mail:* ${info.email}`,
+      "",
+      `*Solicitante:* ${info.solicitante} - ${origem}`,
+    ]
+      .map(line => line.trimStart()) // remove qualquer espaço à esquerda
+      .join("\n");
+
+    navigator.clipboard
+      .writeText(textoFormatado)
+      .then(() => {
+        toast.success("Texto copiado com sucesso!");
+      })
+      .catch(() => {
+        toast.error("Falha ao copiar o texto.");
+      });
+  };
 
   return (
     <Container>
@@ -210,7 +243,7 @@ const CompleTxt = () => {
               <Orange>Cargo:</Orange> {info.cargo}
             </InfoItem>
             <InfoItem>
-              <Orange>{faturamento}</Orange>
+              <Orange>{faturamento.toUpperCase()}</Orange>
             </InfoItem>
             <InfoItem>
               <Orange>Riscos:</Orange>
@@ -228,6 +261,7 @@ const CompleTxt = () => {
               <span>{origem}</span>
             </InfoItem>
           </InfoGroup>
+          <CopyButton onClick={handleCopy}>Copiar texto formatado</CopyButton>
         </RightContainer>
       </Main>
     </Container>
