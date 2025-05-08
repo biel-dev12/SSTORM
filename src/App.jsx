@@ -2,6 +2,7 @@ import { useAuth } from "./components/AuthContext.jsx";
 import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
 import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
+import { LuTextSelect } from "react-icons/lu";
 import { PiCertificateBold  } from "react-icons/pi";
 import { RiMailSendFill } from "react-icons/ri";
 import { Outlet, Link, useNavigate } from "react-router-dom";
@@ -102,7 +103,18 @@ const App = () => {
             <Link to="/send-email">Enviar E-mail</Link>
           </MenuEl.Item>
 
-          <MenuEl.Item key="5" icon={<TbDatabaseSearch />}>
+          <MenuEl.SubMenu
+            key="5"
+            title="Gerar Textos"
+            icon={<LuTextSelect />}
+            className="item"
+          >
+            <MenuEl.Item key="5.1">
+              <Link to="/text-comple">Complemento Txt</Link>
+            </MenuEl.Item>
+          </MenuEl.SubMenu>
+
+          <MenuEl.Item key="6" icon={<TbDatabaseSearch />}>
             <Link to="/bc">Banco de Cargos</Link>
           </MenuEl.Item>
 

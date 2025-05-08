@@ -13,6 +13,7 @@ import CreateCert from "./pages/CreateDocs/Cert35/Cert35.jsx";
 import ImportLtcat from "./pages/CreateDocs/ImportLtcat.jsx/ImportLtcat.jsx";
 import Cert06 from "./pages/CreateDocs/Cert06/Cert06.jsx";
 import CertPgr from "./pages/CreateDocs/CertPgr/CertPgr,.jsx";
+import CompleTxt from "./pages/CreateTxt/CompleTxt.jsx";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +77,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <SendEmail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/text-comple"
+              element={
+                <ProtectedRoute>
+                  <CompleTxt />
                 </ProtectedRoute>
               }
             />
