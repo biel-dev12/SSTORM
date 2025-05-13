@@ -5,6 +5,7 @@ import EmailTemplates from "../../components/EmailTemplates/EmailTemplates.jsx";
 import InformeTecnico from "../../components/EmailForms/InformeTecnico.jsx";
 import TentativaContato from "../../components/EmailForms/TentativaContato.jsx";
 import EmpresaNaoAtende from "../../components/EmailForms/EmpresaNaoAtende.jsx";
+import AcessoHeali from "../../components/EmailForms/AcessoHeali.jsx";
 import { EMAIL_API } from "../../api/config.js";
 import { toast } from "react-toastify";
 
@@ -55,6 +56,14 @@ function SendEmail() {
       case "empresa_nao_atende":
         return (
           <EmpresaNaoAtende
+            modelo={modeloSelecionado}
+            onSend={enviarEmail}
+            setModeloSelecionado={setModeloSelecionado}
+          />
+        );
+        case "acesso_heali":
+        return (
+          <AcessoHeali
             modelo={modeloSelecionado}
             onSend={enviarEmail}
             setModeloSelecionado={setModeloSelecionado}

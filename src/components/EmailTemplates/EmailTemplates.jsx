@@ -44,7 +44,7 @@ function EmailTemplates({ onModeloSelecionado }) {
           >
             <p>{departamento}</p>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
             {Object.keys(departamentos[departamento]).map((modelo) => (
               <Button
                 key={modelo}
