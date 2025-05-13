@@ -15,7 +15,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 function AcessoHeali({ modelo, onSend, setModeloSelecionado }) {
   const [email, setEmail] = useState({
     destinatarios: [""],
-    copia: ["gabrielsantos@doctorspraiagrande.com.br"],
+    copia: ["segurancanotrabalho@doctorspraiagrande.com.br"],
     assunto: `Importante: Orientações para Preenchimento do Formulário Psicossocial`,
     modelo: modelo.nome,
     departamento: modelo.departamento,
