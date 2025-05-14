@@ -95,6 +95,9 @@ const App = () => {
               <Link to="/cert-nr06">NR-06</Link>
             </MenuEl.Item>
             <MenuEl.Item key="3.3">
+              <Link to="/cert-nr05">NR-05</Link>
+            </MenuEl.Item>
+            <MenuEl.Item key="3.4">
               <Link to="/cert-pgr">PGR/PCMSO</Link>
             </MenuEl.Item>
           </MenuEl.SubMenu>
