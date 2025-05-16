@@ -1,32 +1,10 @@
 // src/App.jsx
-import { AEP_API, API_URL } from "../../api/config";
+import { AEP_API } from "../../../api/config";
 import { useState } from "react";
-import styled from "styled-components";
+import { Container, FileInput, Button, ResultLink } from "./styles"
 
-const Container = styled.div`
-  padding: 2rem;
-  font-family: sans-serif;
-`;
 
-const FileInput = styled.input`
-  margin-bottom: 1rem;
-`;
-
-const Button = styled.button`
-  background-color: #007bff;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-const ResultLink = styled.a`
-  display: block;
-  margin-top: 1rem;
-`;
-
-export default function App() {
+export default function AEPTrello() {
   const [file, setFile] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState(null);
 
@@ -59,7 +37,7 @@ export default function App() {
 
   return (
     <Container>
-      <h1>Importar Excel e Extrair Dados</h1>
+      <h1>Importar Excel Trello e Extrair Dados</h1>
       <form onSubmit={handleSubmit}>
         <FileInput
           type="file"

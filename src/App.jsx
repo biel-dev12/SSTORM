@@ -1,9 +1,9 @@
 import { useAuth } from "./components/AuthContext.jsx";
 import { useState } from "react";
 import { MdHome, MdExitToApp, MdSettings } from "react-icons/md";
-import { TbFileAnalytics, TbDatabaseSearch } from "react-icons/tb";
+import { TbFileAnalytics } from "react-icons/tb";
 import { LuTextSelect } from "react-icons/lu";
-import { PiCertificateBold  } from "react-icons/pi";
+import { PiCertificateBold, PiMicrosoftExcelLogoBold } from "react-icons/pi";
 import { RiMailSendFill } from "react-icons/ri";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -117,9 +117,19 @@ const App = () => {
             </MenuEl.Item>
           </MenuEl.SubMenu>
 
-          <MenuEl.Item key="6" icon={<TbDatabaseSearch />}>
-            <Link to="/bc">Banco de Cargos</Link>
-          </MenuEl.Item>
+          <MenuEl.SubMenu
+            key="6"
+            title="AEP"
+            icon={<PiMicrosoftExcelLogoBold />}
+            className="item"
+          >
+            <MenuEl.Item key="6.1">
+              <Link to="/aep-trello">Trello Excel</Link>
+            </MenuEl.Item>
+            <MenuEl.Item key="6.2">
+              <Link to="/aep-modelo-heali">Modelo Heali</Link>
+            </MenuEl.Item>
+          </MenuEl.SubMenu>
 
           {!collapsed && (
             <MenuEl.Item className="div" key="4" disabled={true}>

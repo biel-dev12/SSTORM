@@ -14,8 +14,9 @@ import ImportLtcat from "./pages/CreateDocs/ImportLtcat.jsx/ImportLtcat.jsx";
 import Cert06 from "./pages/CreateDocs/Cert06/Cert06.jsx";
 import CertPgr from "./pages/CreateDocs/CertPgr/CertPgr,.jsx";
 import CompleTxt from "./pages/CreateTxt/CompleTxt.jsx";
-import AEP from "./pages/AEP/AEP";
+import AEP from "./pages/AEP/AEPTrello/AEPTrello.jsx";
 import Cert05 from "./pages/CreateDocs/Cert05/Cert05.jsx";
+import ModeloHeali from "./pages/AEP/ModeloHeali/ModeloHeali.jsx";
 
 const AppRoutes = () => {
   return (
@@ -83,10 +84,18 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path="/aep"
+              path="/aep-trello"
               element={
                 <ProtectedRoute>
                   <AEP />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/aep-modelo-heali"
+              element={
+                <ProtectedRoute>
+                  <ModeloHeali />
                 </ProtectedRoute>
               }
             />
