@@ -8,6 +8,7 @@ import EmpresaNaoAtende from "../../components/EmailForms/EmpresaNaoAtende.jsx";
 import AcessoHeali from "../../components/EmailForms/AcessoHeali.jsx";
 import { EMAIL_API } from "../../api/config.js";
 import { toast } from "react-toastify";
+import RenovCond from "../../components/EmailForms/RenovCond.jsx";
 
 function SendEmail() {
   const [modeloSelecionado, setModeloSelecionado] = useState(null);
@@ -16,7 +17,7 @@ function SendEmail() {
     try {
       await axios.post(
         `${EMAIL_API}/enviar-email`,
-        { ...email }, // Garante que o objeto seja serializado corretamente
+        { ...email },
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
@@ -64,6 +65,14 @@ function SendEmail() {
         case "acesso_heali":
         return (
           <AcessoHeali
+            modelo={modeloSelecionado}
+            onSend={enviarEmail}
+            setModeloSelecionado={setModeloSelecionado}
+          />
+        );
+        case "renovacao_condominio":
+        return (
+          <RenovCond
             modelo={modeloSelecionado}
             onSend={enviarEmail}
             setModeloSelecionado={setModeloSelecionado}
