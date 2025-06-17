@@ -13,7 +13,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 function EmpresaNaoAtende({ modelo, onSend, setModeloSelecionado}) {
   const [email, setEmail] = useState({
     destinatarios: ["comercial@doctorspraiagrande.com.br"],
-    copia: ["segurancanotrabalho@doctorspraiagrande.com.br"],
+    copia: ["tecnico@doctorspraiagrande.com.br"],
     empresa: "",
     assunto: `Situação da Empresa`,
     modelo: modelo.nome,
