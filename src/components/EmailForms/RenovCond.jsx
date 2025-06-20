@@ -38,7 +38,7 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
     if (!proposta) return toast.error("Empresa não possui proposta.");
     if (!mes) return toast.error("Insira o mês de renovação!.");
 
-    const assunto = `INFORMATIVO – RENOVAÇÃO DOS PROGRAMAS PGR/PCMSO | ${mes}/${ano}`;
+    const assunto = `INFORMATIVO – RENOVAÇÃO DOS PROGRAMAS PGR/PCMSO | ${mes}/${ano} - ${nomeEmpresa}`;
 
     const payload = {
       destinatarios: [destinatario],
