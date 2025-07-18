@@ -75,6 +75,10 @@ export const Box = styled.div`
     border: 1px solid #ddd;
     border-radius: 4px;
   }
+
+  &.box-aep{
+    margin-bottom: 20px;
+  }
 `;
 
 export const Label = styled.label``;
