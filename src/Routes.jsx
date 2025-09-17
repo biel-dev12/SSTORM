@@ -17,6 +17,7 @@ import CompleTxt from "./pages/CreateTxt/CompleTxt.jsx";
 import AEP from "./pages/AEP/AEPTrello/AEPTrello.jsx";
 import Cert05 from "./pages/CreateDocs/Cert05/Cert05.jsx";
 import ModeloHeali from "./pages/AEP/ModeloHeali/ModeloHeali.jsx";
+import Cert18B from "./pages/CreateDocs/Cert18B/Cert18B.jsx";
 
 const AppRoutes = () => {
   return (
@@ -72,6 +73,14 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <Cert05 />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cert-nr018b"
+              element={
+                <ProtectedRoute>
+                  <Cert18B />
                 </ProtectedRoute>
               }
             />
