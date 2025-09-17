@@ -77,7 +77,7 @@ const AppRoutes = () => {
               }
             />
             <Route
-              path="/cert-nr018b"
+              path="/cert-nr18b"
               element={
                 <ProtectedRoute>
                   <Cert18B />
