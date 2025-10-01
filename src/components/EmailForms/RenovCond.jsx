@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -9,16 +9,37 @@ import {
 } from "../../pages/SendEmail/SendEmail.js";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { toast } from "react-toastify";
-import propostas from "./adms_proposta.json";
+import axios from "axios";
+import AdmForm from "./AdmForm.jsx";
+import { EMAIL_API } from "../../api/config.js";
 
 function RenovCond({ modelo, onSend, setModeloSelecionado }) {
+  const [propostas, setPropostas] = useState([]);
   const [empresaSelecionada, setEmpresaSelecionada] = useState(null);
   const [mes, setMes] = useState("");
   const [ano, setAno] = useState("2025");
   const [condominios, setCondominios] = useState("");
+  const [showAdmForm, setShowAdmForm] = useState(false);
+  const [admEditando, setAdmEditando] = useState(null);
+
+  // Carregar lista de administradoras
+  const fetchAdms = async () => {
+    try {
+      const res = await axios.get(`${EMAIL_API}/administradoras`);
+      setPropostas(res.data);
+      return res.data; // retorna lista atualizada
+    } catch (error) {
+      console.error("Erro ao carregar administradoras:", error);
+      toast.error("Não foi possível carregar administradoras.");
+      return [];
+    }
+  };
+  useEffect(() => {
+    fetchAdms();
+  }, []);
 
   const empresas = propostas.map((e) => ({
-    label: `${e.Adm} ${e.Nome.trim()}`,
+    label: `${e.Adm} - ${e.Nome.trim()}`,
     value: e.Adm,
   }));
 
@@ -30,7 +51,7 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
 
   const handleEnviar = () => {
     if (!empresaSelecionada) return toast.warning("Selecione uma administradora.");
-    const destinatario = empresaSelecionada["E-mail"]?.trim()
+    const destinatario = empresaSelecionada["E-mail"]?.trim();
     const proposta = empresaSelecionada["Proposta Comercial"];
     const nomeEmpresa = empresaSelecionada.Nome?.trim();
 
@@ -42,12 +63,12 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
 
     const payload = {
       destinatarios: [destinatario],
-      copia: ["comercial@doctorspraiagrande.com.br"],
+      copia: ["gabrielabreu@doctorspraiagrande.com.br"],
       assunto,
       modelo: modelo.nome,
       departamento: modelo.departamento,
-      mes: mes,
-      ano: ano,
+      mes,
+      ano,
       empresa: nomeEmpresa,
       proposta,
       condominios,
@@ -69,7 +90,7 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
 
       <Box>
         <Label>Administradora:</Label>
-        <select onChange={handleEmpresaChange} defaultValue="">
+        <select onChange={handleEmpresaChange} value={empresaSelecionada?.Adm || ""}>
           <option value="">Selecione uma administradora</option>
           {empresas.map((empresa, i) => (
             <option key={i} value={empresa.value}>
@@ -78,6 +99,45 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
           ))}
         </select>
       </Box>
+
+      <Box style={{ display: "flex", gap: "10px" }}>
+        <Button type="button" onClick={() => { setShowAdmForm(true); setAdmEditando(null); }}>
+          Adicionar
+        </Button>
+        {empresaSelecionada && (
+          <Button type="button" onClick={() => { setShowAdmForm(true); setAdmEditando(empresaSelecionada); }}>
+            Editar
+          </Button>
+        )}
+      </Box>
+
+      {showAdmForm && (
+        <AdmForm
+          adm={admEditando}
+          onSave={async () => {
+            setShowAdmForm(false);
+            const novas = await fetchAdms();
+
+            // 🔥 atualiza seleção imediatamente
+            if (admEditando) {
+              const atualizada = novas.find(p => p.Adm === admEditando.Adm);
+              if (atualizada) setEmpresaSelecionada(atualizada);
+            } else {
+              // se for uma nova, seleciona ela automaticamente
+              const ultima = novas[novas.length - 1];
+              setEmpresaSelecionada(ultima);
+            }
+
+            setAdmEditando(null);
+          }}
+          onClose={() => {
+            setShowAdmForm(false);
+            setAdmEditando(null);
+          }}
+        />
+      )}
+
+
 
       <Box>
         <Label>Mês:</Label>
@@ -109,7 +169,7 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
         />
       </Box>
 
-      <Button onClick={handleEnviar}>Enviar E-mail</Button>
+      <Button type="button" onClick={handleEnviar}>Enviar E-mail</Button>
     </Form>
   );
 }
