@@ -63,7 +63,7 @@ function RenovCond({ modelo, onSend, setModeloSelecionado }) {
 
     const payload = {
       destinatarios: [destinatario],
-      copia: ["gabrielabreu@doctorspraiagrande.com.br"],
+      copia: ["comercial@doctorspraiagrande.com.br"],
       assunto,
       modelo: modelo.nome,
       departamento: modelo.departamento,
