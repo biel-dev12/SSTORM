@@ -80,8 +80,8 @@ function AdmForm({ adm, onSave, onClose }) {
         />
 
         <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
-          <Button onClick={handleSubmit} style={{marginTop: "15px"}}>Salvar</Button>
-          <button onClick={onClose} style={{ background: "#ccc" }}>Cancelar</button>
+          <Button onClick={handleSubmit} style={{marginTop: "25px"}}>Salvar</Button>
+          <button onClick={onClose} style={{ background: "#ccc", marginTop: "25px" }}>Cancelar</button>
         </div>
       </div>
     </div>
